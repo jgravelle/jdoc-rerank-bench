@@ -48,10 +48,20 @@ Pools are written to `pools/`. They hold document text and are gitignored.
 
     python -m pytest tests -q
 
-## Not built yet
+## Jev (Arm B): not evaluated
 
-Arm scoring and reports, labels format, latency probe, Jev and cross-encoder
-providers, the two-step downstream evaluation.
+Nothing in this repository is a measurement of Jev. There is no Jev provider in
+`bench/providers.py`, no Jev score in `results/`, and no call was made to the
+service. `DECISION_CRITERIA.md` section 7 sets what arm B would have to show:
+B minus C with its lower bound above zero and a point estimate of at least
++0.04, or B within ±0.02 of C with live p95 at or below C's; in both cases live
+p95 at most 1,000 ms, and vendor terms that permit publishing the comparison.
+That section applies only after a local reranker passes section 6.
+
+## Not built
+
+The Jev provider, and the two-step downstream evaluation (rows, then the
+agent's `get_section` calls) that the default-on decision needs.
 
 ## Attribution and what is not here
 
