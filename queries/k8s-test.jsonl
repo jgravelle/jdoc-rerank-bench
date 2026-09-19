@@ -1,0 +1,55 @@
+{"qid": "kt32266053", "class": "Q5", "query": "How to specify a static IP address for a load balancer?", "source": "stackoverflow.com/q/32266053"}
+{"qid": "kt44519980", "class": "Q3", "query": "Assign an external IP to a Service", "source": "stackoverflow.com/q/44519980"}
+{"qid": "kt50375826", "class": "Q3", "query": "How to download a PersistentVolume's content", "source": "stackoverflow.com/q/50375826"}
+{"qid": "kt30538210", "class": "Q3", "query": "How to mimic '--volumes-from'", "source": "stackoverflow.com/q/30538210"}
+{"qid": "kt51612976", "class": "Q4", "query": "How to view members of a subject with Group kind", "source": "stackoverflow.com/q/51612976"}
+{"qid": "kt53799600", "class": "Q3", "query": "Port forwarding gives connection refused", "source": "stackoverflow.com/q/53799600"}
+{"qid": "kt34443138", "class": "Q4", "query": "Difference between NodePort and LoadBalancer?", "source": "stackoverflow.com/q/34443138"}
+{"qid": "kt51209870", "class": "Q6", "query": "Minikube vs Kubernetes in Docker for Windows", "source": "stackoverflow.com/q/51209870"}
+{"qid": "kt49885636", "class": "Q3", "query": "Expired certificate", "source": "stackoverflow.com/q/49885636"}
+{"qid": "kt52890718", "class": "Q3", "query": "kubectl run is deprecated - looking for an alternative", "source": "stackoverflow.com/q/52890718"}
+{"qid": "kt58933155", "class": "Q6", "query": "Manual workflow triggers in GitHub Actions", "source": "stackoverflow.com/q/58933155"}
+{"qid": "kt63604579", "class": "Q4", "query": "What is the difference between patches and patchesJson6902 in Kustomize?", "source": "stackoverflow.com/q/63604579"}
+{"qid": "kt49888133", "class": "Q3", "query": "Service cluster IP, how is this internally load balanced across different nodes", "source": "stackoverflow.com/q/49888133"}
+{"qid": "kt44190607", "class": "Q3", "query": "How do you find the cluster and service CIDR of a cluster?", "source": "stackoverflow.com/q/44190607"}
+{"qid": "kt41563021", "class": "Q3", "query": "How do you get a pod's name from its IP address?", "source": "stackoverflow.com/q/41563021"}
+{"qid": "kt74233349", "class": "Q6", "query": "How do I install gke-gcloud-auth-plugin on a Mac M1 with zsh", "source": "stackoverflow.com/q/74233349"}
+{"qid": "kt49639280", "class": "Q3", "query": "Cannot pull image from a private docker image repository", "source": "stackoverflow.com/q/49639280"}
+{"qid": "kt41963433", "class": "Q2", "query": "What does it mean for a Service to be of type NodePort and have both port and targetPort specified?", "source": "stackoverflow.com/q/41963433"}
+{"qid": "kt35453704", "class": "Q2", "query": "How to clear CrashLoopBackOff", "source": "stackoverflow.com/q/35453704"}
+{"qid": "kt47168381", "class": "Q4", "query": "Best practices for storing configuration in source control", "source": "stackoverflow.com/q/47168381"}
+{"qid": "kt55515594", "class": "Q5", "query": "Is there a way to share a ConfigMap between namespaces?", "source": "stackoverflow.com/q/55515594"}
+{"qid": "kt55213545", "class": "Q6", "query": "Helm range without leaving global scope", "source": "stackoverflow.com/q/55213545"}
+{"qid": "kt47973570", "class": "Q2", "query": "User \"system:serviceaccount:default:default\" cannot get services in the namespace", "source": "stackoverflow.com/q/47973570"}
+{"qid": "kt62964532", "class": "Q6", "query": "helm not creating the resources", "source": "stackoverflow.com/q/62964532"}
+{"qid": "kt53534553", "class": "Q4", "query": "CNI vs kube-proxy", "source": "stackoverflow.com/q/53534553"}
+{"qid": "kt54602224", "class": "Q5", "query": "How to view the permissions/roles associated with a specific service account?", "source": "stackoverflow.com/q/54602224"}
+{"qid": "kt67550782", "class": "Q3", "query": "How to login/enter in a pod", "source": "stackoverflow.com/q/67550782"}
+{"qid": "kt39436845", "class": "Q2", "query": "Multiple commands in postStart hook of a container", "source": "stackoverflow.com/q/39436845"}
+{"qid": "kt48877182", "class": "Q5", "query": "Rolling deployments and database migrations", "source": "stackoverflow.com/q/48877182"}
+{"qid": "kt53276398", "class": "Q3", "query": "CPU multithreading", "source": "stackoverflow.com/q/53276398"}
+{"qid": "kt54629660", "class": "Q3", "query": "How do I delete a PV in the correct manner", "source": "stackoverflow.com/q/54629660"}
+{"qid": "kt53701151", "class": "Q3", "query": "How to upgrade kubectl client version", "source": "stackoverflow.com/q/53701151"}
+{"qid": "kt67624630", "class": "Q2", "query": "Unable to copy data from pod to local using kubectl cp command", "source": "stackoverflow.com/q/67624630"}
+{"qid": "kt55853312", "class": "Q3", "query": "How to force delete a Namespace?", "source": "stackoverflow.com/q/55853312"}
+{"qid": "kt53429486", "class": "Q5", "query": "How to define a ConfigMap built using a file in a yaml?", "source": "stackoverflow.com/q/53429486"}
+{"qid": "kt53960516", "class": "Q5", "query": "Can I connect one service account to multiple namespaces?", "source": "stackoverflow.com/q/53960516"}
+{"qid": "kt59451056", "class": "Q4", "query": "Differences between Sidecar, Ambassador and Adapter pattern", "source": "stackoverflow.com/q/59451056"}
+{"qid": "kt43675231", "class": "Q3", "query": "Delete all jobs in bulk", "source": "stackoverflow.com/q/43675231"}
+{"qid": "kt51168558", "class": "Q5", "query": "How to mount a postgresql volume using AWS EBS", "source": "stackoverflow.com/q/51168558"}
+{"qid": "kt57696087", "class": "Q3", "query": "How to generate a YAML template with a kubectl command?", "source": "stackoverflow.com/q/57696087"}
+{"qid": "kt53255956", "class": "Q4", "query": "What is the meaning of CPU and core?", "source": "stackoverflow.com/q/53255956"}
+{"qid": "kt38869673", "class": "Q2", "query": "Pod in pending state due to Insufficient CPU", "source": "stackoverflow.com/q/38869673"}
+{"qid": "kt48518324", "class": "Q3", "query": "How to SSH into a node or server", "source": "stackoverflow.com/q/48518324"}
+{"qid": "kt48015637", "class": "Q4", "query": "kubectl run vs create and apply", "source": "stackoverflow.com/q/48015637"}
+{"qid": "kt39420102", "class": "Q5", "query": "How can I store a binary file in a ConfigMap?", "source": "stackoverflow.com/q/39420102"}
+{"qid": "kt45050050", "class": "Q3", "query": "Can I modify a container's environment variables without restarting the pod", "source": "stackoverflow.com/q/45050050"}
+{"qid": "kt42528409", "class": "Q2", "query": "What does <unset> mean in port in a service?", "source": "stackoverflow.com/q/42528409"}
+{"qid": "kt55762084", "class": "Q4", "query": "How can I find the list of field selectors supported by kubectl for a given resource type?", "source": "stackoverflow.com/q/55762084"}
+{"qid": "kt42356861", "class": "Q5", "query": "Can I use autocompletion for kubectl in zsh?", "source": "stackoverflow.com/q/42356861"}
+{"qid": "kt33472741", "class": "Q4", "query": "What work does the process in the pause container do?", "source": "stackoverflow.com/q/33472741"}
+{"qid": "kt53485346", "class": "Q3", "query": "Script to continuously follow kubectl get pods", "source": "stackoverflow.com/q/53485346"}
+{"qid": "kt41475088", "class": "Q4", "query": "When to use Docker HEALTHCHECK vs livenessProbe / readinessProbe", "source": "stackoverflow.com/q/41475088"}
+{"qid": "kt46028731", "class": "Q4", "query": "How can the OR selector be used with labels?", "source": "stackoverflow.com/q/46028731"}
+{"qid": "kt43147941", "class": "Q3", "query": "Allow scheduling of pods on the master?", "source": "stackoverflow.com/q/43147941"}
+{"qid": "kt34455040", "class": "Q5", "query": "Liveness probe logging", "source": "stackoverflow.com/q/34455040"}

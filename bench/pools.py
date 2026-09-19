@@ -127,6 +127,8 @@ def main(argv=None) -> int:
     ap.add_argument("--arms", default="A-lex,A-hyb")
     ap.add_argument("--store", default=str(ROOT / "store"))
     ap.add_argument("--out", default=None)
+    ap.add_argument("--split", default=None, help="suffix for the pool file, e.g. test")
+    ap.add_argument("--reuse-index", action="store_true", help="corpus already indexed in --store at this snapshot")
     args = ap.parse_args(argv)
 
     arms = args.arms.split(",")
@@ -135,13 +137,14 @@ def main(argv=None) -> int:
     if "A-hyb" in arms and not os.environ.get("JDOCMUNCH_EMBEDDING_PROVIDER"):
         ap.error("A-hyb needs JDOCMUNCH_EMBEDDING_PROVIDER set explicitly")
     queries = [json.loads(line) for line in Path(args.queries).read_text(encoding="utf-8").splitlines() if line.strip()]
-    index_corpus(args.corpus, args.name, args.store, embeddings="A-hyb" in arms)
+    if not args.reuse_index:
+        index_corpus(args.corpus, args.name, args.store, embeddings="A-hyb" in arms)
     rows = build_pools(f"local/{args.name}", queries, args.store, args.n, arms)
 
     import jdocmunch_mcp
     header = {
         "_run": {
-            "corpus": args.name, "snapshot": args.snapshot, "n": args.n, "arms": arms,
+            "corpus": args.name, "split": args.split, "snapshot": args.snapshot, "n": args.n, "arms": arms,
             "jdocmunch_version": getattr(jdocmunch_mcp, "__version__", "unknown"),
             "jdocmunch_file": jdocmunch_mcp.__file__,
             "jdocmunch_commit": jdoc_revision(),
@@ -149,7 +152,7 @@ def main(argv=None) -> int:
             "date": _dt.datetime.now().isoformat(timespec="seconds"),
         }
     }
-    out = Path(args.out or ROOT / "pools" / f"{args.name}.n{args.n}.jsonl")
+    out = Path(args.out or ROOT / "pools" / f"{args.name}{'-' + args.split if args.split else ''}.n{args.n}.jsonl")
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w", encoding="utf-8") as fh:
         for row in [header, *rows]:

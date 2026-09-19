@@ -1,0 +1,50 @@
+{"qid": "pt5226311", "class": "Q3", "query": "Installing a specific package version with pip", "source": "stackoverflow.com/q/5226311"}
+{"qid": "pt7225900", "class": "Q5", "query": "How can I install packages using pip according to the requirements.txt file from a local directory?", "source": "stackoverflow.com/q/7225900"}
+{"qid": "pt11618898", "class": "Q6", "query": "pg_config executable not found", "source": "stackoverflow.com/q/11618898"}
+{"qid": "pt27885397", "class": "Q2", "query": "How do I install a Python package with a .whl file?", "source": "stackoverflow.com/q/27885397"}
+{"qid": "pt20101834", "class": "Q3", "query": "pip install from a git repo branch", "source": "stackoverflow.com/q/20101834"}
+{"qid": "pt20994716", "class": "Q6", "query": "What is the difference between pip and Conda?", "source": "stackoverflow.com/q/20994716"}
+{"qid": "pt75608323", "class": "Q2", "query": "How do I solve \"error: externally-managed-environment\" every time I use pip?", "source": "stackoverflow.com/q/75608323"}
+{"qid": "pt15221473", "class": "Q3", "query": "How do I update or upgrade pip itself from inside my virtual environment?", "source": "stackoverflow.com/q/15221473"}
+{"qid": "pt3220404", "class": "Q4", "query": "Why use pip over easy_install?", "source": "stackoverflow.com/q/3220404"}
+{"qid": "pt2817869", "class": "Q6", "query": "error: Unable to find vcvarsall.bat", "source": "stackoverflow.com/q/2817869"}
+{"qid": "pt16584552", "class": "Q5", "query": "How to state a direct GitHub source in requirements.txt", "source": "stackoverflow.com/q/16584552"}
+{"qid": "pt25981703", "class": "Q6", "query": "pip install fails with \"connection error: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed\"", "source": "stackoverflow.com/q/25981703"}
+{"qid": "pt2812520", "class": "Q3", "query": "Dealing with multiple Python versions and pip", "source": "stackoverflow.com/q/2812520"}
+{"qid": "pt15031694", "class": "Q5", "query": "Installing Python packages from a local file system folder to a virtualenv with pip", "source": "stackoverflow.com/q/15031694"}
+{"qid": "pt26053982", "class": "Q6", "query": "setup script exited with error: command 'x86_64-linux-gnu-gcc' failed with exit status 1", "source": "stackoverflow.com/q/26053982"}
+{"qid": "pt9159757", "class": "Q4", "query": "Can I add comments to a pip requirements file?", "source": "stackoverflow.com/q/9159757"}
+{"qid": "pt28568070", "class": "Q2", "query": "Error \"filename.whl is not a supported wheel on this platform\"", "source": "stackoverflow.com/q/28568070"}
+{"qid": "pt8795617", "class": "Q4", "query": "How to pip install a package with a min and max version range?", "source": "stackoverflow.com/q/8795617"}
+{"qid": "pt14399534", "class": "Q5", "query": "Reference requirements.txt for the install_requires kwarg in a setuptools setup.py file", "source": "stackoverflow.com/q/14399534"}
+{"qid": "pt62983756", "class": "Q2", "query": "What is the pyproject.toml file for?", "source": "stackoverflow.com/q/62983756"}
+{"qid": "pt42988977", "class": "Q2", "query": "What is the purpose of \"pip install --user\"?", "source": "stackoverflow.com/q/42988977"}
+{"qid": "pt11091623", "class": "Q3", "query": "How can I install packages offline?", "source": "stackoverflow.com/q/11091623"}
+{"qid": "pt35898734", "class": "Q3", "query": "pip installs packages successfully, but executables are not found from the command line", "source": "stackoverflow.com/q/35898734"}
+{"qid": "pt35064426", "class": "Q4", "query": "When would the -e, --editable option be useful with pip install?", "source": "stackoverflow.com/q/35064426"}
+{"qid": "pt46775346", "class": "Q3", "query": "What do square brackets mean in pip install?", "source": "stackoverflow.com/q/46775346"}
+{"qid": "pt53204916", "class": "Q2", "query": "What is the meaning of \"Failed building wheel for X\" in pip install?", "source": "stackoverflow.com/q/53204916"}
+{"qid": "pt30306099", "class": "Q4", "query": "\"pip install --editable ./\" vs \"python setup.py develop\"", "source": "stackoverflow.com/q/30306099"}
+{"qid": "pt1471994", "class": "Q2", "query": "What is setup.py?", "source": "stackoverflow.com/q/1471994"}
+{"qid": "pt15746675", "class": "Q3", "query": "How to write a Python module/package?", "source": "stackoverflow.com/q/15746675"}
+{"qid": "pt458550", "class": "Q4", "query": "Standard way to embed a version into a Python package?", "source": "stackoverflow.com/q/458550"}
+{"qid": "pt50155464", "class": "Q5", "query": "Using pytest with a src layer", "source": "stackoverflow.com/q/50155464"}
+{"qid": "pt32923952", "class": "Q3", "query": "How do I list the files inside a Python wheel?", "source": "stackoverflow.com/q/32923952"}
+{"qid": "pt64150719", "class": "Q2", "query": "How to write a minimally working pyproject.toml file that can install packages?", "source": "stackoverflow.com/q/64150719"}
+{"qid": "pt74508024", "class": "Q4", "query": "Is requirements.txt still needed when using pyproject.toml?", "source": "stackoverflow.com/q/74508024"}
+{"qid": "pt14665216", "class": "Q3", "query": "How to easily distribute Python software that has Python module dependencies?", "source": "stackoverflow.com/q/14665216"}
+{"qid": "pt72832052", "class": "Q2", "query": "Is there a simple way to convert setup.py to pyproject.toml?", "source": "stackoverflow.com/q/72832052"}
+{"qid": "pt75408641", "class": "Q4", "query": "What's the difference between the [tool.poetry] and [project] tables in pyproject.toml?", "source": "stackoverflow.com/q/75408641"}
+{"qid": "pt41816693", "class": "Q3", "query": "How to list dependencies for a Python library without installing it?", "source": "stackoverflow.com/q/41816693"}
+{"qid": "pt44878600", "class": "Q4", "query": "Is setup.cfg deprecated?", "source": "stackoverflow.com/q/44878600"}
+{"qid": "pt58753970", "class": "Q5", "query": "How to build a source distribution without using a setup.py file?", "source": "stackoverflow.com/q/58753970"}
+{"qid": "pt66157987", "class": "Q5", "query": "How to build a C extension in keeping with PEP 517, i.e. with pyproject.toml instead of setup.py?", "source": "stackoverflow.com/q/66157987"}
+{"qid": "pt26528178", "class": "Q3", "query": "Right way to set up a Python package with sub-packages", "source": "stackoverflow.com/q/26528178"}
+{"qid": "pt57628064", "class": "Q3", "query": "Automating the Python package release process", "source": "stackoverflow.com/q/57628064"}
+{"qid": "pt74354009", "class": "Q5", "query": "Install dependencies from pyproject.toml but not the package", "source": "stackoverflow.com/q/74354009"}
+{"qid": "pt75100102", "class": "Q5", "query": "Get the app version from pyproject.toml inside Python code", "source": "stackoverflow.com/q/75100102"}
+{"qid": "pt75490231", "class": "Q4", "query": "In pyproject.toml, can optional dependency groups require other optional dependency groups?", "source": "stackoverflow.com/q/75490231"}
+{"qid": "pt20683118", "class": "Q3", "query": "How to access Python package metadata from within the Python console?", "source": "stackoverflow.com/q/20683118"}
+{"qid": "pt75049691", "class": "Q5", "query": "Specifying test dependencies in pyproject.toml and getting them installed with pip install -e", "source": "stackoverflow.com/q/75049691"}
+{"qid": "pt52474931", "class": "Q4", "query": "What is an 'extra' in a PyPI dependency?", "source": "stackoverflow.com/q/52474931"}
+{"qid": "pt68545064", "class": "Q4", "query": "Python commands to build a distribution: setup.py build vs python -m build", "source": "stackoverflow.com/q/68545064"}

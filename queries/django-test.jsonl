@@ -1,0 +1,55 @@
+{"qid": "dt8609192", "class": "Q4", "query": "What is the difference between null=True and blank=True?", "source": "stackoverflow.com/q/8609192"}
+{"qid": "dt687295", "class": "Q3", "query": "How do I do a not equal in queryset filtering?", "source": "stackoverflow.com/q/687295"}
+{"qid": "dt13866926", "class": "Q6", "query": "Is there a list of pytz timezones?", "source": "stackoverflow.com/q/13866926"}
+{"qid": "dt15501673", "class": "Q6", "query": "How can I temporarily disable a foreign key constraint in MySQL?", "source": "stackoverflow.com/q/15501673"}
+{"qid": "dt431628", "class": "Q3", "query": "How to combine multiple QuerySets?", "source": "stackoverflow.com/q/431628"}
+{"qid": "dt32123477", "class": "Q3", "query": "How to revert the last migration?", "source": "stackoverflow.com/q/32123477"}
+{"qid": "dt427102", "class": "Q4", "query": "What is a \"slug\"?", "source": "stackoverflow.com/q/427102"}
+{"qid": "dt5871730", "class": "Q3", "query": "How to upload a file?", "source": "stackoverflow.com/q/5871730"}
+{"qid": "dt38388423", "class": "Q4", "query": "What does on_delete do on models?", "source": "stackoverflow.com/q/38388423"}
+{"qid": "dt6468397", "class": "Q3", "query": "How to check the Django version", "source": "stackoverflow.com/q/6468397"}
+{"qid": "dt2642613", "class": "Q4", "query": "What is related_name used for?", "source": "stackoverflow.com/q/2642613"}
+{"qid": "dt6358030", "class": "Q3", "query": "How to reset the admin password?", "source": "stackoverflow.com/q/6358030"}
+{"qid": "dt844556", "class": "Q3", "query": "How to filter empty or NULL names in a QuerySet?", "source": "stackoverflow.com/q/844556"}
+{"qid": "dt150505", "class": "Q3", "query": "How to get GET request values?", "source": "stackoverflow.com/q/150505"}
+{"qid": "dt23708898", "class": "Q6", "query": "'pip' is not recognized as an internal or external command", "source": "stackoverflow.com/q/23708898"}
+{"qid": "dt2201598", "class": "Q3", "query": "How to define two fields \"unique\" as a couple", "source": "stackoverflow.com/q/2201598"}
+{"qid": "dt2428092", "class": "Q3", "query": "Creating a JSON response", "source": "stackoverflow.com/q/2428092"}
+{"qid": "dt31237042", "class": "Q4", "query": "What's the difference between select_related and prefetch_related in the ORM?", "source": "stackoverflow.com/q/31237042"}
+{"qid": "dt5870537", "class": "Q4", "query": "OneToOneField() vs ForeignKey()", "source": "stackoverflow.com/q/5870537"}
+{"qid": "dt44109", "class": "Q4", "query": "What's the best way to extend the User model?", "source": "stackoverflow.com/q/44109"}
+{"qid": "dt324477", "class": "Q3", "query": "In a form, how do I make a field readonly (or disabled) so that it cannot be edited?", "source": "stackoverflow.com/q/324477"}
+{"qid": "dt18622007", "class": "Q2", "query": "RuntimeWarning: DateTimeField received a naive datetime", "source": "stackoverflow.com/q/18622007"}
+{"qid": "dt6578986", "class": "Q6", "query": "How to convert JSON data into a Python object?", "source": "stackoverflow.com/q/6578986"}
+{"qid": "dt5836674", "class": "Q5", "query": "Why does the DEBUG=False setting make my static files access fail?", "source": "stackoverflow.com/q/5836674"}
+{"qid": "dt629551", "class": "Q3", "query": "How to query as GROUP BY?", "source": "stackoverflow.com/q/629551"}
+{"qid": "dt19743396", "class": "Q6", "query": "CORS: Cannot use wildcard in Access-Control-Allow-Origin when credentials flag is true", "source": "stackoverflow.com/q/19743396"}
+{"qid": "dt2345708", "class": "Q3", "query": "How can I get the full/absolute URL (with domain)?", "source": "stackoverflow.com/q/2345708"}
+{"qid": "dt739776", "class": "Q3", "query": "How to do an OR filter in a query?", "source": "stackoverflow.com/q/739776"}
+{"qid": "dt9834038", "class": "Q2", "query": "order_by queryset, ascending and descending", "source": "stackoverflow.com/q/9834038"}
+{"qid": "dt3805958", "class": "Q3", "query": "How to delete a record in models?", "source": "stackoverflow.com/q/3805958"}
+{"qid": "dt21925671", "class": "Q3", "query": "Convert a model object to a dict with all of the fields intact", "source": "stackoverflow.com/q/21925671"}
+{"qid": "dt1074212", "class": "Q3", "query": "How can I see the raw SQL queries being run?", "source": "stackoverflow.com/q/1074212"}
+{"qid": "dt9304908", "class": "Q3", "query": "How can I filter a query with a list of values?", "source": "stackoverflow.com/q/9304908"}
+{"qid": "dt26672077", "class": "Q4", "query": "Model() vs Model.objects.create()", "source": "stackoverflow.com/q/26672077"}
+{"qid": "dt433162", "class": "Q5", "query": "Can I access constants in settings.py from templates?", "source": "stackoverflow.com/q/433162"}
+{"qid": "dt163823", "class": "Q5", "query": "Can \"list_display\" in a ModelAdmin display attributes of ForeignKey fields?", "source": "stackoverflow.com/q/163823"}
+{"qid": "dt7354588", "class": "Q4", "query": "What's the difference between CharField and TextField?", "source": "stackoverflow.com/q/7354588"}
+{"qid": "dt3090302", "class": "Q3", "query": "How do I get the object if it exists, or None if it does not exist?", "source": "stackoverflow.com/q/3090302"}
+{"qid": "dt2882490", "class": "Q5", "query": "How to get the current URL within a template?", "source": "stackoverflow.com/q/2882490"}
+{"qid": "dt4581789", "class": "Q3", "query": "How do I get the user's IP address?", "source": "stackoverflow.com/q/4581789"}
+{"qid": "dt11481499", "class": "Q3", "query": "Iterate a number in a for loop of a template", "source": "stackoverflow.com/q/11481499"}
+{"qid": "dt2771676", "class": "Q2", "query": "datetime issues with default=datetime.now()", "source": "stackoverflow.com/q/2771676"}
+{"qid": "dt1355150", "class": "Q5", "query": "When saving a model, how can you check if a field has changed?", "source": "stackoverflow.com/q/1355150"}
+{"qid": "dt15307623", "class": "Q5", "query": "Can't compare naive and aware datetime.now() <= challenge.datetime_end", "source": "stackoverflow.com/q/15307623"}
+{"qid": "dt4668619", "class": "Q3", "query": "How do I filter query objects by date range?", "source": "stackoverflow.com/q/4668619"}
+{"qid": "dt4733609", "class": "Q3", "query": "How do I clone a model instance object and save it to the database?", "source": "stackoverflow.com/q/4733609"}
+{"qid": "dt2979369", "class": "Q2", "query": "DatabaseError: current transaction is aborted, commands ignored until end of transaction block", "source": "stackoverflow.com/q/2979369"}
+{"qid": "dt4320679", "class": "Q3", "query": "Display the choice value", "source": "stackoverflow.com/q/4320679"}
+{"qid": "dt16853649", "class": "Q5", "query": "How to execute a Python script from the shell?", "source": "stackoverflow.com/q/16853649"}
+{"qid": "dt1737017", "class": "Q2", "query": "auto_now and auto_now_add", "source": "stackoverflow.com/q/1737017"}
+{"qid": "dt1626326", "class": "Q4", "query": "How to manage local vs production settings?", "source": "stackoverflow.com/q/1626326"}
+{"qid": "dt11241668", "class": "Q4", "query": "What is reverse()?", "source": "stackoverflow.com/q/11241668"}
+{"qid": "dt3644902", "class": "Q2", "query": "How to check if a user is logged in (how to properly use user.is_authenticated)?", "source": "stackoverflow.com/q/3644902"}
+{"qid": "dt1941212", "class": "Q2", "query": "How to use \"get_or_create()\"?", "source": "stackoverflow.com/q/1941212"}
+{"qid": "dt15128135", "class": "Q5", "query": "Setting DEBUG = False causes a 500 error", "source": "stackoverflow.com/q/15128135"}
