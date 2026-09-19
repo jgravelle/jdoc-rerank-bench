@@ -52,3 +52,16 @@ Pools are written to `pools/`. They hold document text and are gitignored.
 
 Arm scoring and reports, labels format, latency probe, Jev and cross-encoder
 providers, the two-step downstream evaluation.
+
+## Attribution and what is not here
+
+The files in `queries/` are lightly cleaned titles of Stack Overflow questions
+(and, for the FastAPI dev split, FastAPI GitHub Discussions). Stack Overflow
+content is licensed CC BY-SA; each row's `source` field links the original
+question, and the cleaned queries are shared under the same licence.
+
+The corpora are the public documentation of Kubernetes, FastAPI, Django, the
+Python Packaging User Guide and Docker, pinned by the commit SHAs recorded in the
+memos. Their text is not redistributed here: `pools/`, `label_tasks/` and
+`audit/` hold passage text and are gitignored. `pools-test*.sha256` lets anyone
+who rebuilds the pools check that they match the frozen ones.
