@@ -133,3 +133,43 @@ section 10.
 
 At the time of this amendment the test-split queries and pool hashes are
 committed (`0be914e`, `d767b04`) and no test-split labels or reranker scores exist.
+
+### A2 — 2026-09-19, after the first test split returned ITERATE
+
+Added on J.'s instruction. The first test split (memo
+`results/DECISION_MEMO-2026-09-19.md`) failed 6.3 and 6.5 and is spent. Under
+section 8 the settings below were tuned without new labels and are now fixed for
+a NEW test split. Sections 6 to 9 and every threshold in them are unchanged.
+
+**Fixed settings (replace the transform in section 5 and the pool in section 4):**
+
+- Model `Xenova/ms-marco-MiniLM-L-6-v2`, file `onnx/model_quantized.onnx` (int8),
+  512-token cap, one passage per inference call, 4 onnxruntime threads.
+- Pool: the hybrid top 15.
+- Rank transform, gated promotion: passages whose sigmoid rerank score is at
+  least 0.95 move to the front, ordered among themselves by RRF (k=10) of their
+  retrieval rank and rerank rank within that promoted set. Every other passage
+  keeps its retrieval order. If nothing reaches 0.95 the order is unchanged.
+  Reference implementation: `bench.tune.promote(pool, scores, 0.95, k=10)`.
+- The threshold is tied to this model file. A different model needs its own.
+
+**Latency (refines 6.5, limits unchanged):** measured on J.'s machine with total
+CPU load under 10% before the run, torch not loaded, three runs over the full
+test split. The run with the median p95 is the one reported and judged. All
+three are shown.
+
+**How the settings were chosen, and what that does to the estimates.** Tuning
+used the dev split and the spent test split together (252 queries, Q3 to Q5).
+Every figure from that tuning is a selection estimate and is optimistic:
+pooled delta +0.067 [+0.047, +0.088], 7.9% of queries worse; on the spent split
+alone +0.063 and 9.7%. Expect the new split to be worse on both.
+
+**The new test split:** fresh queries only (no query ID from the dev split or
+the spent split), the four corpora of the spent split plus at least one new
+corpus, at least 150 ranking queries with at least 30 in each of Q3, Q4 and Q5.
+Queries, pool hashes and labels are committed before any reranker scores them.
+
+**The memo must state:** the selection optimism above; and the per-corpus
+regression rates beside the pooled one. On the tuning data Django and FastAPI
+stayed near 14% worse under every threshold tried, so a pooled pass of 6.3 can
+coexist with a corpus above 12%.
