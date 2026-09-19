@@ -139,3 +139,15 @@ because Arm B is judged against Arm C on a test split.
 No claim about answer quality, tokens saved, or agent behaviour. The two-step
 downstream evaluation has not been run. English only. One embedder behind the
 baseline. One machine.
+
+## Addendum, same day: latency re-measurement. For the record only.
+
+Reported beside the figure above, not in place of it. The 6.5 verdict stands.
+
+The config that was tested (4 threads, pool of 20, one passage per call),
+re-measured on a quiet machine over 100 queries drawn from all six pools, three
+runs: p50 / p95 of 298 / 413, 286 / 419 and 300 / 436 ms. The test-split run
+gave 398 / 1,251 ms. Neighbouring runs on the busy machine differed by up to 3x,
+so the test-split latency figure mostly measured the machine. On the quiet
+machine the tested config sits at the p50 limit (300 ms) and inside the p95
+limit. Details: `results/tune-2026-09-19.md`.
