@@ -1,0 +1,6 @@
+corpora/
+store/
+pools/
+runs/
+__pycache__/
+.pytest_cache/
