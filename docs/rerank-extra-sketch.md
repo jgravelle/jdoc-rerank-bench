@@ -1,5 +1,9 @@
 # Sketch: `jdocmunch-mcp[rerank]`
 
+**NOT SHIPPING (J., 2026-09-19).** The reranker failed check 6.3 on two test
+splits. This file is kept as a design note beside a negative result. Do not
+merge a `[rerank]` extra into jdocmunch-mcp on this evidence.
+
 Design sketch, 2026-09-19. Nothing here is built. It is written against
 jdocmunch-mcp 1.142.0 (`121a5a2`). It lives in the harness repo because a new
 large markdown file in the jdocmunch tree joins the replay corpus.
