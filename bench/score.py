@@ -23,7 +23,8 @@ def main(argv=None) -> int:
 
     provider = REGISTRY[args.provider](args.model) if args.model else REGISTRY[args.provider]()
     pool_file = Path(args.pools)
-    out = {"_run": {"provider": provider.name, "version": provider.version, "pools": pool_file.name}, "queries": {}}
+    out = {"_run": {"provider": provider.name, "version": provider.version, "pools": pool_file.name,
+                    "load_ms": getattr(provider, "load_ms", None)}, "queries": {}}
     for row in load_pools(pool_file):
         # Timed per baseline pool: what a user pays is one pool of N, not the union.
         timings = {}
@@ -32,7 +33,11 @@ def main(argv=None) -> int:
             provider.score(row["query"], {i: row["candidates"][i] for i in ids})
             timings[arm] = round((time.perf_counter() - t0) * 1000, 1)
         out["queries"][row["qid"]] = {"scores": provider.score(row["query"], row["candidates"]), "latency_ms": timings}
-    dest = ROOT / "runs" / "scores" / f"{pool_file.name.split('.')[0]}.{provider.name if not args.model else args.model.split('/')[-1]}.json"
+    # Control: which runtime actually ran. A silent torch fallback would score
+    # identically to Arm C and mean nothing about the ONNX deployment.
+    out["_run"]["torch_loaded"] = "torch" in sys.modules
+    out["_run"]["onnxruntime_loaded"] = "onnxruntime" in sys.modules
+    dest = ROOT / "runs" / "scores" / f"{pool_file.name.split('.')[0]}.{provider.name if not args.model else provider.name.split('-')[0] + '-' + args.model.split('/')[-1]}.json"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(out), encoding="utf-8")
     print(f"{len(out['queries'])} queries -> {dest}")

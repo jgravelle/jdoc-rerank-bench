@@ -45,4 +45,22 @@ class CrossEncoder:
         return {i: 1.0 / (1.0 + math.exp(-float(x))) for i, x in zip(ids, raw)}
 
 
-REGISTRY = {"answerability": Answerability, "cross-encoder": CrossEncoder}
+class OnnxCrossEncoder:
+    """Arm C as it would ship: ONNX via fastembed, no torch."""
+    name = "onnx-cross-encoder"
+
+    def __init__(self, model: str = "Xenova/ms-marco-MiniLM-L-6-v2"):
+        import time
+        from fastembed.rerank.cross_encoder import TextCrossEncoder
+        t0 = time.perf_counter()
+        self._m = TextCrossEncoder(model_name=model)
+        self.load_ms = round((time.perf_counter() - t0) * 1000, 1)
+        self.version = model
+
+    def score(self, query, candidates):
+        ids = list(candidates)
+        raw = list(self._m.rerank(query, [passage_text(candidates[i]) for i in ids]))
+        return {i: 1.0 / (1.0 + math.exp(-float(x))) for i, x in zip(ids, raw)}
+
+
+REGISTRY = {"onnx-cross-encoder": OnnxCrossEncoder, "answerability": Answerability, "cross-encoder": CrossEncoder}
