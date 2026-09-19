@@ -1,0 +1,52 @@
+{"qid": "fa5028", "class": "Q3", "query": "how can I mock the request in tests", "source": "fastapi/fastapi#discussion-5028"}
+{"qid": "fa9328", "class": "Q3", "query": "why does FastAPI redirect a url with a trailing slash instead of resolving it", "source": "fastapi/fastapi#discussion-9328"}
+{"qid": "fa4365", "class": "Q3", "query": "how to avoid 504 gateway timeout errors on slow endpoints", "source": "fastapi/fastapi#discussion-4365"}
+{"qid": "fa4291", "class": "Q3", "query": "what is the purpose of the server dropdown on the docs page and how do I configure it", "source": "fastapi/fastapi#discussion-4291"}
+{"qid": "fa4793", "class": "Q3", "query": "how to customize the Authorize form fields in Swagger", "source": "fastapi/fastapi#discussion-4793"}
+{"qid": "fa8169", "class": "Q5", "query": "protect the API docs behind authentication", "source": "fastapi/fastapi#discussion-8169"}
+{"qid": "fa11847", "class": "Q3", "query": "is it possible to check for production or development mode", "source": "fastapi/fastapi#discussion-11847"}
+{"qid": "fa7364", "class": "Q3", "query": "how does one set up a global timeout for all requests", "source": "fastapi/fastapi#discussion-7364"}
+{"qid": "fa8810", "class": "Q5", "query": "how to use a router level dependency in the routes", "source": "fastapi/fastapi#discussion-8810"}
+{"qid": "fa13523", "class": "Q3", "query": "disable logging for certain endpoints", "source": "fastapi/fastapi#discussion-13523"}
+{"qid": "fa7703", "class": "Q5", "query": "how to test background tasks", "source": "fastapi/fastapi#discussion-7703"}
+{"qid": "fa9009", "class": "Q4", "query": "how to add a description or bearerFormat to security scheme objects in OpenAPI", "source": "fastapi/fastapi#discussion-9009"}
+{"qid": "fa10404", "class": "Q5", "query": "how do you handle errors that occur in middleware", "source": "fastapi/fastapi#discussion-10404"}
+{"qid": "fa9322", "class": "Q3", "query": "how do I pass arguments to main.py when it is run by uvicorn", "source": "fastapi/fastapi#discussion-9322"}
+{"qid": "fa10016", "class": "Q5", "query": "define query string parameters with a pydantic model", "source": "fastapi/fastapi#discussion-10016"}
+{"qid": "fa13029", "class": "Q4", "query": "is it appropriate to store a database client in lifespan state", "source": "fastapi/fastapi#discussion-13029"}
+{"qid": "fa6526", "class": "Q5", "query": "can background tasks be used in the startup event for a long-running loop", "source": "fastapi/fastapi#discussion-6526"}
+{"qid": "fa11872", "class": "Q5", "query": "port a middleware that uses the shutdown event to lifespan", "source": "fastapi/fastapi#discussion-11872"}
+{"qid": "fa7448", "class": "Q3", "query": "set a different OpenAPI schema name for automatically generated body names", "source": "fastapi/fastapi#discussion-7448"}
+{"qid": "fa6695", "class": "Q3", "query": "how to disable the default 422 response in the docs", "source": "fastapi/fastapi#discussion-6695"}
+{"qid": "fa7585", "class": "Q3", "query": "how to hide certain fields of a model in the response", "source": "fastapi/fastapi#discussion-7585"}
+{"qid": "fa9556", "class": "Q2", "query": "how to set response_model_by_alias globally", "source": "fastapi/fastapi#discussion-9556"}
+{"qid": "fa13540", "class": "Q5", "query": "how to delete the file after returning a FileResponse", "source": "fastapi/fastapi#discussion-13540"}
+{"qid": "fa8636", "class": "Q4", "query": "best practice for runtime config from the command line when launching the app", "source": "fastapi/fastapi#discussion-8636"}
+{"qid": "fa9995", "class": "Q3", "query": "is it possible to unmount a sub application", "source": "fastapi/fastapi#discussion-9995"}
+{"qid": "fa12082", "class": "Q5", "query": "dependency injection during the startup process", "source": "fastapi/fastapi#discussion-12082"}
+{"qid": "fa7713", "class": "Q5", "query": "generate documentation for websocket endpoints", "source": "fastapi/fastapi#discussion-7713"}
+{"qid": "fa7022", "class": "Q5", "query": "how to make a list of uploaded files optional", "source": "fastapi/fastapi#discussion-7022"}
+{"qid": "fa13261", "class": "Q5", "query": "validate the response with response_model while returning a Response directly", "source": "fastapi/fastapi#discussion-13261"}
+{"qid": "fa5105", "class": "Q4", "query": "best practice for trailing slashes on endpoints", "source": "fastapi/fastapi#discussion-5105"}
+{"qid": "fa9124", "class": "Q5", "query": "include possible HTTPExceptions in the OpenAPI spec", "source": "fastapi/fastapi#discussion-9124"}
+{"qid": "fa7786", "class": "Q3", "query": "a way to handle multiple request content types", "source": "fastapi/fastapi#discussion-7786"}
+{"qid": "fa8167", "class": "Q4", "query": "strategies for limiting upload file size", "source": "fastapi/fastapi#discussion-8167"}
+{"qid": "fa8502", "class": "Q5", "query": "accessing dependencies in background tasks", "source": "fastapi/fastapi#discussion-8502"}
+{"qid": "fa9234", "class": "Q5", "query": "use an ML model loaded in the lifespan function from another file such as an api router", "source": "fastapi/fastapi#discussion-9234"}
+{"qid": "fa9478", "class": "Q3", "query": "generic exception handler to capture all types of exception", "source": "fastapi/fastapi#discussion-9478"}
+{"qid": "fa3448", "class": "Q3", "query": "customizing the swagger documentation", "source": "fastapi/fastapi#discussion-3448"}
+{"qid": "fa4799", "class": "Q3", "query": "a way to access the Request object globally", "source": "fastapi/fastapi#discussion-4799"}
+{"qid": "fa9518", "class": "Q5", "query": "custom validation of query parameters using pydantic models", "source": "fastapi/fastapi#discussion-9518"}
+{"qid": "fa9568", "class": "Q5", "query": "basic authentication for the swagger docs while the endpoints use api key header authentication", "source": "fastapi/fastapi#discussion-9568"}
+{"qid": "fa10352", "class": "Q3", "query": "hide the input from the response on a 422 validation error", "source": "fastapi/fastapi#discussion-10352"}
+{"qid": "fa7319", "class": "Q3", "query": "cross origin requests from my javascript frontend are blocked", "source": "fastapi/fastapi#discussion-7319"}
+{"qid": "fa11769", "class": "Q3", "query": "stop docstrings being used as endpoint descriptions", "source": "fastapi/fastapi#discussion-11769"}
+{"qid": "fa10701", "class": "Q3", "query": "StreamingResponse is returning all the content at once", "source": "fastapi/fastapi#discussion-10701"}
+{"qid": "fa4611", "class": "Q4", "query": "use permission scopes at both router and endpoint level", "source": "fastapi/fastapi#discussion-4611"}
+{"qid": "fa6889", "class": "Q5", "query": "use a DB dependency without passing it through a function tree", "source": "fastapi/fastapi#discussion-6889"}
+{"qid": "fa9894", "class": "Q5", "query": "dependencies with websockets", "source": "fastapi/fastapi#discussion-9894"}
+{"qid": "fa13566", "class": "Q2", "query": "can I use more than one Query Parameter Model", "source": "fastapi/fastapi#discussion-13566"}
+{"qid": "fa2743", "class": "Q6", "query": "Kerberos authentication", "source": "fastapi/fastapi#discussion-2743"}
+{"qid": "fa7702", "class": "Q6", "query": "RapiDoc integration", "source": "fastapi/fastapi#discussion-7702"}
+{"qid": "fa8889", "class": "Q6", "query": "how does fastapi record response time per request in a database", "source": "fastapi/fastapi#discussion-8889"}
+{"qid": "fa14807", "class": "Q6", "query": "recommended scalable websocket libraries for thousands of connections across servers", "source": "fastapi/fastapi#discussion-14807"}

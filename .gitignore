@@ -4,3 +4,4 @@ pools/
 runs/
 __pycache__/
 .pytest_cache/
+label_tasks/
