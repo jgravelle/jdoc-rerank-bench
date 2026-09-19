@@ -114,3 +114,22 @@ local reranker alone. That outcome is a result, and it is published.
 The memo quotes this file verbatim from its committed revision and applies it
 without amendment. Any change after the commit is labeled post hoc in the memo.
 Per-class tables come first. The pooled figure is not the headline.
+
+## Amendments
+
+### A1 — 2026-09-19, post hoc, before any test-split reranker score exists
+
+Added on J.'s instruction after commit `074dfa3`. Labeled post hoc under
+section 10.
+
+- **Fixed setting (adds to section 4):** the local int8 reranker runs one passage
+  per inference call. The int8 file uses dynamic quantization, so a passage's
+  score depends on what else is in its batch. Measured on the dev split: with
+  sub-batches of 4 the top 5 changed on 26 of 64 Kubernetes queries when the pool
+  around a passage changed; with one passage per call, 0 of 64.
+- **Audit gate (section 3):** J. accepts the audit of 2026-09-19 as a pass. Its
+  grades came from an independent second model, not a human. The memo says so and
+  includes a sensitivity table that counts only grade 2 as relevant.
+
+At the time of this amendment the test-split queries and pool hashes are
+committed (`0be914e`, `d767b04`) and no test-split labels or reranker scores exist.
