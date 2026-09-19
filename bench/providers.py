@@ -63,4 +63,21 @@ class OnnxCrossEncoder:
         return {i: 1.0 / (1.0 + math.exp(-float(x))) for i, x in zip(ids, raw)}
 
 
-REGISTRY = {"onnx-cross-encoder": OnnxCrossEncoder, "answerability": Answerability, "cross-encoder": CrossEncoder}
+class OnnxInt8:
+    """The candidate shipping config: int8 weights, 512 tokens, length-sorted
+    sub-batches of 4 (results/fastapi-levers-2026-09-19.md)."""
+    name = "onnx-int8"
+    version = "Xenova/ms-marco-MiniLM-L-6-v2:model_quantized:512:b4"
+
+    def __init__(self):
+        from .levers import Ort
+        self._m = Ort("int8", 512)
+        self._m.bucket = 4
+
+    def score(self, query, candidates):
+        ids = list(candidates)
+        raw = self._m.score(query, [passage_text(candidates[i]) for i in ids])
+        return {i: 1.0 / (1.0 + math.exp(-x)) for i, x in zip(ids, raw)}
+
+
+REGISTRY = {"onnx-int8": OnnxInt8, "onnx-cross-encoder": OnnxCrossEncoder, "answerability": Answerability, "cross-encoder": CrossEncoder}

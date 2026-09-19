@@ -1,0 +1,64 @@
+{"qid": "k35453792", "class": "Q3", "query": "pods stuck in Terminating status", "source": "stackoverflow.com/q/35453792"}
+{"qid": "k41509439", "class": "Q4", "query": "difference between ClusterIP, NodePort and LoadBalancer service types", "source": "stackoverflow.com/q/41509439"}
+{"qid": "k47369351", "class": "Q2", "query": "kubectl apply vs kubectl create", "source": "stackoverflow.com/q/47369351"}
+{"qid": "k45079988", "class": "Q4", "query": "ingress vs load balancer", "source": "stackoverflow.com/q/45079988"}
+{"qid": "k41325087", "class": "Q4", "query": "what is the difference between a pod and a deployment", "source": "stackoverflow.com/q/41325087"}
+{"qid": "k43380939", "class": "Q3", "query": "where does the convention of using /healthz for application health checks come from", "source": "stackoverflow.com/q/43380939"}
+{"qid": "k33112789", "class": "Q3", "query": "how do I force Kubernetes to re-pull an image", "source": "stackoverflow.com/q/33112789"}
+{"qid": "k40401795", "class": "Q3", "query": "how can I trigger a scheduled job manually", "source": "stackoverflow.com/q/40401795"}
+{"qid": "k52369247", "class": "Q3", "query": "namespace stuck as Terminating, how do I remove it", "source": "stackoverflow.com/q/52369247"}
+{"qid": "k33069736", "class": "Q5", "query": "how do I get logs from all pods of a replication controller", "source": "stackoverflow.com/q/33069736"}
+{"qid": "k55373686", "class": "Q3", "query": "how to switch namespace", "source": "stackoverflow.com/q/55373686"}
+{"qid": "k49981601", "class": "Q2", "query": "difference between targetPort and port in a Service definition", "source": "stackoverflow.com/q/49981601"}
+{"qid": "k44110876", "class": "Q3", "query": "service external ip stays pending", "source": "stackoverflow.com/q/44110876"}
+{"qid": "k31870222", "class": "Q3", "query": "how can I keep a container running", "source": "stackoverflow.com/q/31870222"}
+{"qid": "k40686151", "class": "Q3", "query": "pod gets recreated when deleted", "source": "stackoverflow.com/q/40686151"}
+{"qid": "k43941772", "class": "Q3", "query": "get the YAML for deployed services", "source": "stackoverflow.com/q/43941772"}
+{"qid": "k52407277", "class": "Q3", "query": "how to copy files from pods to the local system", "source": "stackoverflow.com/q/52407277"}
+{"qid": "k37221483", "class": "Q5", "query": "reach a service located in another namespace", "source": "stackoverflow.com/q/37221483"}
+{"qid": "k40366192", "class": "Q5", "query": "how to make a Deployment update its image", "source": "stackoverflow.com/q/40366192"}
+{"qid": "k37317003", "class": "Q5", "query": "restart pods when a configmap updates", "source": "stackoverflow.com/q/37317003"}
+{"qid": "k46297949", "class": "Q5", "query": "is there a way to share secrets across namespaces", "source": "stackoverflow.com/q/46297949"}
+{"qid": "k37016546", "class": "Q5", "query": "how do I delete clusters and contexts from kubectl config", "source": "stackoverflow.com/q/37016546"}
+{"qid": "k52707840", "class": "Q4", "query": "what is a headless service, what does it accomplish, and what are legitimate use cases", "source": "stackoverflow.com/q/52707840"}
+{"qid": "k54531646", "class": "Q3", "query": "checking pod CPU and memory utilization", "source": "stackoverflow.com/q/54531646"}
+{"qid": "k51468491", "class": "Q4", "query": "how does kubectl port-forward create a connection", "source": "stackoverflow.com/q/51468491"}
+{"qid": "k34848422", "class": "Q2", "query": "how can I debug ImagePullBackOff", "source": "stackoverflow.com/q/34848422"}
+{"qid": "k56909180", "class": "Q3", "query": "decoding a secret", "source": "stackoverflow.com/q/56909180"}
+{"qid": "k33415913", "class": "Q3", "query": "best way to mount one single file into a pod", "source": "stackoverflow.com/q/33415913"}
+{"qid": "k33887194", "class": "Q3", "query": "how to set multiple commands for a container in one yaml file", "source": "stackoverflow.com/q/33887194"}
+{"qid": "k41604499", "class": "Q5", "query": "pods keep crashing with CrashLoopBackOff but I can't find any log", "source": "stackoverflow.com/q/41604499"}
+{"qid": "k43212836", "class": "Q4", "query": "multiple environments such as staging, QA and production", "source": "stackoverflow.com/q/43212836"}
+{"qid": "k46123457", "class": "Q3", "query": "restart a container within a pod", "source": "stackoverflow.com/q/46123457"}
+{"qid": "k41583672", "class": "Q4", "query": "Deployments vs StatefulSets", "source": "stackoverflow.com/q/41583672"}
+{"qid": "k37255731", "class": "Q5", "query": "clean up old replica sets when updating deployments", "source": "stackoverflow.com/q/37255731"}
+{"qid": "k45879498", "class": "Q5", "query": "how can I update a secret when it is generated from a file", "source": "stackoverflow.com/q/45879498"}
+{"qid": "k46419163", "class": "Q4", "query": "what will happen to evicted pods", "source": "stackoverflow.com/q/46419163"}
+{"qid": "k54821044", "class": "Q3", "query": "how to stop or pause a pod", "source": "stackoverflow.com/q/54821044"}
+{"qid": "k52668938", "class": "Q2", "query": "pod has unbound PersistentVolumeClaims", "source": "stackoverflow.com/q/52668938"}
+{"qid": "k41385403", "class": "Q5", "query": "automatically remove completed Jobs created by a CronJob", "source": "stackoverflow.com/q/41385403"}
+{"qid": "k43544370", "class": "Q5", "query": "how to set volume mount user group and file permissions", "source": "stackoverflow.com/q/43544370"}
+{"qid": "k48956049", "class": "Q4", "query": "difference between a persistent volume and a persistent volume claim in simple terms", "source": "stackoverflow.com/q/48956049"}
+{"qid": "k35757620", "class": "Q3", "query": "how to gracefully remove a node from the cluster", "source": "stackoverflow.com/q/35757620"}
+{"qid": "k44316361", "class": "Q5", "query": "difference between Docker ENTRYPOINT and the container spec command", "source": "stackoverflow.com/q/44316361"}
+{"qid": "k52857825", "class": "Q4", "query": "what is an endpoint", "source": "stackoverflow.com/q/52857825"}
+{"qid": "k51946393", "class": "Q2", "query": "node(s) had volume node affinity conflict", "source": "stackoverflow.com/q/51946393"}
+{"qid": "k42793382", "class": "Q5", "query": "exec commands on pods with root access", "source": "stackoverflow.com/q/42793382"}
+{"qid": "k47848258", "class": "Q4", "query": "difference between a controller and an operator", "source": "stackoverflow.com/q/47848258"}
+{"qid": "k52776690", "class": "Q3", "query": "disabling a cronjob", "source": "stackoverflow.com/q/52776690"}
+{"qid": "k38216278", "class": "Q5", "query": "update a ConfigMap or Secret without deleting the existing one", "source": "stackoverflow.com/q/38216278"}
+{"qid": "k30746888", "class": "Q5", "query": "how to know a pod's own IP address from inside a container in the pod", "source": "stackoverflow.com/q/30746888"}
+{"qid": "k30690186", "class": "Q5", "query": "how do I access the Kubernetes api from within a pod container", "source": "stackoverflow.com/q/30690186"}
+{"qid": "k58481850", "class": "Q2", "query": "no matches for kind Deployment in version extensions/v1beta1", "source": "stackoverflow.com/q/58481850"}
+{"qid": "k47572597", "class": "Q3", "query": "scale down pods", "source": "stackoverflow.com/q/47572597"}
+{"qid": "k33478555", "class": "Q3", "query": "equivalent of docker env-file", "source": "stackoverflow.com/q/33478555"}
+{"qid": "k50804915", "class": "Q2", "query": "size definitions: what's the difference between Gi and G", "source": "stackoverflow.com/q/50804915"}
+{"qid": "k44686568", "class": "Q3", "query": "tell when a Job is complete", "source": "stackoverflow.com/q/44686568"}
+{"qid": "k43379415", "class": "Q3", "query": "how can I list the taints on nodes", "source": "stackoverflow.com/q/43379415"}
+{"qid": "k46184125", "class": "Q3", "query": "how to merge a kubectl config file with ~/.kube/config", "source": "stackoverflow.com/q/46184125"}
+{"qid": "k34067979", "class": "Q5", "query": "how to delete a node label by command and api", "source": "stackoverflow.com/q/34067979"}
+{"qid": "k26705201", "class": "Q6", "query": "difference between Apache Mesos and Kubernetes", "source": "stackoverflow.com/q/26705201"}
+{"qid": "k51031294", "class": "Q6", "query": "for a helm chart, what versions are available", "source": "stackoverflow.com/q/51031294"}
+{"qid": "k50791303", "class": "Q6", "query": "kubectl error You must be logged in to the server (Unauthorized) when accessing an EKS cluster", "source": "stackoverflow.com/q/50791303"}
+{"qid": "k62473932", "class": "Q6", "query": "at least one invalid signature was encountered during apt-get update in the image build", "source": "stackoverflow.com/q/62473932"}
+{"qid": "k71599858", "class": "Q6", "query": "helm UPGRADE FAILED: another operation is in progress", "source": "stackoverflow.com/q/71599858"}
