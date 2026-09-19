@@ -1,0 +1,44 @@
+{"qid": "k2_33509194", "class": "Q3", "query": "Command to delete all pods in all namespaces", "source": "stackoverflow.com/q/33509194"}
+{"qid": "k2_39454962", "class": "Q3", "query": "kubectl logs - continuously", "source": "stackoverflow.com/q/39454962"}
+{"qid": "k2_39231880", "class": "Q5", "query": "API - get pods on specific nodes", "source": "stackoverflow.com/q/39231880"}
+{"qid": "k2_47128586", "class": "Q3", "query": "How to delete all resources at one time?", "source": "stackoverflow.com/q/47128586"}
+{"qid": "k2_47691479", "class": "Q3", "query": "Listing all resources in a namespace", "source": "stackoverflow.com/q/47691479"}
+{"qid": "k2_33924198", "class": "Q3", "query": "How do you cleanly list all the containers in a pod?", "source": "stackoverflow.com/q/33924198"}
+{"qid": "k2_51931113", "class": "Q5", "query": "kubectl get events only for a pod", "source": "stackoverflow.com/q/51931113"}
+{"qid": "k2_45310287", "class": "Q3", "query": "Sort pods by age", "source": "stackoverflow.com/q/45310287"}
+{"qid": "k2_28086732", "class": "Q4", "query": "What does Kubernetes actually do?", "source": "stackoverflow.com/q/28086732"}
+{"qid": "k2_57683206", "class": "Q3", "query": "What is the reverse of \"kubectl apply\"?", "source": "stackoverflow.com/q/57683206"}
+{"qid": "k2_49928819", "class": "Q6", "query": "How to pull environment variables with Helm charts", "source": "stackoverflow.com/q/49928819"}
+{"qid": "k2_64125048", "class": "Q2", "query": "unknown field \"serviceName\" in io.k8s.api.networking.v1.IngressBackend when switching Ingress from v1beta1 to v1", "source": "stackoverflow.com/q/64125048"}
+{"qid": "k2_36650642", "class": "Q2", "query": "did you specify the right host or port? error", "source": "stackoverflow.com/q/36650642"}
+{"qid": "k2_37302776", "class": "Q4", "query": "What is the meaning of ImagePullBackOff status on a pod?", "source": "stackoverflow.com/q/37302776"}
+{"qid": "k2_55853977", "class": "Q5", "query": "How to get the current namespace of the current context using kubectl", "source": "stackoverflow.com/q/55853977"}
+{"qid": "k2_21917661", "class": "Q6", "query": "Can you connect to Amazon ElastiCache Redis outside of Amazon?", "source": "stackoverflow.com/q/21917661"}
+{"qid": "k2_59558303", "class": "Q3", "query": "How to find the url of a service?", "source": "stackoverflow.com/q/59558303"}
+{"qid": "k2_65006907", "class": "Q6", "query": "Helm stuck with an update in progress", "source": "stackoverflow.com/q/65006907"}
+{"qid": "k2_59844622", "class": "Q5", "query": "Ingress configuration for services in different namespaces", "source": "stackoverflow.com/q/59844622"}
+{"qid": "k2_51247619", "class": "Q3", "query": "Execute bash command in pod with kubectl?", "source": "stackoverflow.com/q/51247619"}
+{"qid": "k2_57961162", "class": "Q6", "query": "Helm install unknown flag --name", "source": "stackoverflow.com/q/57961162"}
+{"qid": "k2_51358856", "class": "Q3", "query": "Can't delete PersistentVolumeClaim (pvc)", "source": "stackoverflow.com/q/51358856"}
+{"qid": "k2_50424754", "class": "Q2", "query": "Pod status as CreateContainerConfigError", "source": "stackoverflow.com/q/50424754"}
+{"qid": "k2_41732819", "class": "Q4", "query": "Why StatefulSets? Can't a stateless Pod use persistent volumes?", "source": "stackoverflow.com/q/41732819"}
+{"qid": "k2_31693529", "class": "Q3", "query": "How to share storage between pods?", "source": "stackoverflow.com/q/31693529"}
+{"qid": "k2_40447295", "class": "Q3", "query": "How to configure kubectl with cluster information from a .conf file?", "source": "stackoverflow.com/q/40447295"}
+{"qid": "k2_34084689", "class": "Q3", "query": "View log files of crashed pods", "source": "stackoverflow.com/q/34084689"}
+{"qid": "k2_57559357", "class": "Q3", "query": "How to rolling restart pods without changing deployment yaml?", "source": "stackoverflow.com/q/57559357"}
+{"qid": "k2_37180209", "class": "Q3", "query": "Modify a secret using kubectl?", "source": "stackoverflow.com/q/37180209"}
+{"qid": "k2_69448131", "class": "Q4", "query": "What's the difference between Deployment and Replica set?", "source": "stackoverflow.com/q/69448131"}
+{"qid": "k2_36912372", "class": "Q4", "query": "When to use Secrets as opposed to ConfigMaps?", "source": "stackoverflow.com/q/36912372"}
+{"qid": "k2_39764365", "class": "Q4", "query": "What's the meaning of \"READY=2/2\" output by \"kubectl get pod\"", "source": "stackoverflow.com/q/39764365"}
+{"qid": "k2_34282704", "class": "Q5", "query": "Can a PVC be bound to a specific PV?", "source": "stackoverflow.com/q/34282704"}
+{"qid": "k2_65399714", "class": "Q4", "query": "What is the difference between subPath and mountPath", "source": "stackoverflow.com/q/65399714"}
+{"qid": "k2_40288077", "class": "Q5", "query": "How to pass image pull secret while using 'kubectl run' command?", "source": "stackoverflow.com/q/40288077"}
+{"qid": "k2_40713573", "class": "Q5", "query": "How to run containers sequentially as a job?", "source": "stackoverflow.com/q/40713573"}
+{"qid": "k2_53411958", "class": "Q5", "query": "How to view logs of failed jobs with kubectl?", "source": "stackoverflow.com/q/53411958"}
+{"qid": "k2_40530946", "class": "Q4", "query": "What is the difference between always and on failure for restart policy?", "source": "stackoverflow.com/q/40530946"}
+{"qid": "k2_65858309", "class": "Q4", "query": "Why do I need 3 different kinds of probes: startupProbe, readinessProbe, livenessProbe", "source": "stackoverflow.com/q/65858309"}
+{"qid": "k2_57798267", "class": "Q4", "query": "Persistent Volume access modes: ReadWriteOnce vs ReadOnlyMany vs ReadWriteMany", "source": "stackoverflow.com/q/57798267"}
+{"qid": "k2_46456239", "class": "Q5", "query": "How to expose a headless Kafka service for a StatefulSet externally", "source": "stackoverflow.com/q/46456239"}
+{"qid": "k2_44505461", "class": "Q5", "query": "How to configure a non-default serviceAccount on a deployment", "source": "stackoverflow.com/q/44505461"}
+{"qid": "k2_47770676", "class": "Q5", "query": "How to create a kubectl config file for serviceaccount", "source": "stackoverflow.com/q/47770676"}
+{"qid": "k2_59079318", "class": "Q5", "query": "How to mount multiple files / secrets into common directory?", "source": "stackoverflow.com/q/59079318"}

@@ -1,0 +1,44 @@
+{"qid": "o2_16047306", "class": "Q4", "query": "How is Docker different from a virtual machine?", "source": "stackoverflow.com/q/16047306"}
+{"qid": "o2_24319662", "class": "Q5", "query": "From inside a container, how do I connect to the localhost of the machine?", "source": "stackoverflow.com/q/24319662"}
+{"qid": "o2_24958140", "class": "Q4", "query": "What is the difference between the COPY and ADD commands in a Dockerfile?", "source": "stackoverflow.com/q/24958140"}
+{"qid": "o2_22049212", "class": "Q3", "query": "Copying files from a container to the host", "source": "stackoverflow.com/q/22049212"}
+{"qid": "o2_21553353", "class": "Q4", "query": "What is the difference between CMD and ENTRYPOINT in a Dockerfile?", "source": "stackoverflow.com/q/21553353"}
+{"qid": "o2_30172605", "class": "Q3", "query": "How do I get a console-like connection into a container's shell?", "source": "stackoverflow.com/q/30172605"}
+{"qid": "o2_23935141", "class": "Q3", "query": "How to copy images from one host to another without using a repository", "source": "stackoverflow.com/q/23935141"}
+{"qid": "o2_17157721", "class": "Q3", "query": "How to get a container's IP address from the host", "source": "stackoverflow.com/q/17157721"}
+{"qid": "o2_16647069", "class": "Q6", "query": "Should I use Vagrant or Docker for creating an isolated environment?", "source": "stackoverflow.com/q/16647069"}
+{"qid": "o2_35594987", "class": "Q3", "query": "How to force a clean build of an image", "source": "stackoverflow.com/q/35594987"}
+{"qid": "o2_30494050", "class": "Q3", "query": "How do I pass environment variables to containers?", "source": "stackoverflow.com/q/30494050"}
+{"qid": "o2_17236796", "class": "Q3", "query": "How to remove old containers", "source": "stackoverflow.com/q/17236796"}
+{"qid": "o2_23735149", "class": "Q4", "query": "What is the difference between an image and a container?", "source": "stackoverflow.com/q/23735149"}
+{"qid": "o2_32723111", "class": "Q3", "query": "How can I remove old and unused images?", "source": "stackoverflow.com/q/32723111"}
+{"qid": "o2_20813486", "class": "Q3", "query": "Exploring a container's file system", "source": "stackoverflow.com/q/20813486"}
+{"qid": "o2_18496940", "class": "Q5", "query": "How to deal with persistent storage (e.g. databases) in containers", "source": "stackoverflow.com/q/18496940"}
+{"qid": "o2_19234831", "class": "Q4", "query": "Where are images stored on the host machine?", "source": "stackoverflow.com/q/19234831"}
+{"qid": "o2_40801772", "class": "Q4", "query": "What is the difference between ports and expose in docker-compose?", "source": "stackoverflow.com/q/40801772"}
+{"qid": "o2_30063907", "class": "Q3", "query": "How to execute multiple commands with Compose?", "source": "stackoverflow.com/q/30063907"}
+{"qid": "o2_43099116", "class": "Q2", "query": "Error \"the input device is not a TTY\"", "source": "stackoverflow.com/q/43099116"}
+{"qid": "o2_25211198", "class": "Q3", "query": "How to change repository name or rename an image?", "source": "stackoverflow.com/q/25211198"}
+{"qid": "o2_44678725", "class": "Q2", "query": "Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?", "source": "stackoverflow.com/q/44678725"}
+{"qid": "o2_16840409", "class": "Q3", "query": "How to list containers", "source": "stackoverflow.com/q/16840409"}
+{"qid": "o2_23439126", "class": "Q3", "query": "How to mount a host directory in a container", "source": "stackoverflow.com/q/23439126"}
+{"qid": "o2_27068596", "class": "Q3", "query": "How to include files outside of the build context?", "source": "stackoverflow.com/q/27068596"}
+{"qid": "o2_41984399", "class": "Q2", "query": "docker push error: denied: requested access to the resource is denied", "source": "stackoverflow.com/q/41984399"}
+{"qid": "o2_18497688", "class": "Q3", "query": "Run an image as a container", "source": "stackoverflow.com/q/18497688"}
+{"qid": "o2_39901311", "class": "Q6", "query": "Ubuntu container: bash: ping: command not found", "source": "stackoverflow.com/q/39901311"}
+{"qid": "o2_19335444", "class": "Q5", "query": "How do I assign a port mapping to an existing container?", "source": "stackoverflow.com/q/19335444"}
+{"qid": "o2_27093612", "class": "Q5", "query": "In a Dockerfile, how to update the PATH environment variable?", "source": "stackoverflow.com/q/27093612"}
+{"qid": "o2_22111060", "class": "Q4", "query": "What is the difference between \"expose\" and \"publish\"?", "source": "stackoverflow.com/q/22111060"}
+{"qid": "o2_30604846", "class": "Q2", "query": "Docker complains about \"no space left on device\", how to clean up?", "source": "stackoverflow.com/q/30604846"}
+{"qid": "o2_31697828", "class": "Q2", "query": "Name is already in use by container", "source": "stackoverflow.com/q/31697828"}
+{"qid": "o2_28349392", "class": "Q3", "query": "How to push an image to a private repository", "source": "stackoverflow.com/q/28349392"}
+{"qid": "o2_37461868", "class": "Q4", "query": "Difference between RUN and CMD in a Dockerfile", "source": "stackoverflow.com/q/37461868"}
+{"qid": "o2_36884991", "class": "Q3", "query": "How to rebuild a container in docker-compose.yml?", "source": "stackoverflow.com/q/36884991"}
+{"qid": "o2_38088279", "class": "Q5", "query": "Communication between multiple docker-compose projects", "source": "stackoverflow.com/q/38088279"}
+{"qid": "o2_42564058", "class": "Q6", "query": "How can I use local Docker images with Minikube?", "source": "stackoverflow.com/q/42564058"}
+{"qid": "o2_29480099", "class": "Q4", "query": "What's the difference between Docker Compose and a Dockerfile?", "source": "stackoverflow.com/q/29480099"}
+{"qid": "o2_43747776", "class": "Q5", "query": "COPY in a Dockerfile but with exclusion", "source": "stackoverflow.com/q/43747776"}
+{"qid": "o2_31746182", "class": "Q5", "query": "Compose: wait for container X before starting Y", "source": "stackoverflow.com/q/31746182"}
+{"qid": "o2_37694987", "class": "Q5", "query": "Connecting to PostgreSQL in a container from outside", "source": "stackoverflow.com/q/37694987"}
+{"qid": "o2_29377853", "class": "Q5", "query": "How can I use environment variables in docker-compose?", "source": "stackoverflow.com/q/29377853"}
+{"qid": "o2_55313610", "class": "Q6", "query": "ImportError: libGL.so.1: cannot open shared object file: No such file or directory", "source": "stackoverflow.com/q/55313610"}

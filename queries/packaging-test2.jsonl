@@ -1,0 +1,44 @@
+{"qid": "p2_4750806", "class": "Q3", "query": "How do I install pip on Windows?", "source": "stackoverflow.com/q/4750806"}
+{"qid": "p2_5178292", "class": "Q6", "query": "pip install mysql-python fails with EnvironmentError: mysql_config not found", "source": "stackoverflow.com/q/5178292"}
+{"qid": "p2_47071256", "class": "Q3", "query": "How to update or upgrade a package using pip?", "source": "stackoverflow.com/q/47071256"}
+{"qid": "p2_6344076", "class": "Q4", "query": "Differences between distribute, distutils, setuptools and distutils2?", "source": "stackoverflow.com/q/6344076"}
+{"qid": "p2_4830856", "class": "Q3", "query": "Is it possible to use pip to install a package from a private GitHub repository?", "source": "stackoverflow.com/q/4830856"}
+{"qid": "p2_19048732", "class": "Q4", "query": "setup.py develop vs install", "source": "stackoverflow.com/q/19048732"}
+{"qid": "p2_7143077", "class": "Q3", "query": "Installing pip packages to the $HOME folder", "source": "stackoverflow.com/q/7143077"}
+{"qid": "p2_13685920", "class": "Q5", "query": "Install a specific git commit with pip", "source": "stackoverflow.com/q/13685920"}
+{"qid": "p2_14149422", "class": "Q6", "query": "Using pip behind a proxy with CNTLM", "source": "stackoverflow.com/q/14149422"}
+{"qid": "p2_774824", "class": "Q4", "query": "Explain Python entry points", "source": "stackoverflow.com/q/774824"}
+{"qid": "p2_38217545", "class": "Q4", "query": "What is the difference between pyenv, virtualenv, and Anaconda?", "source": "stackoverflow.com/q/38217545"}
+{"qid": "p2_4324558", "class": "Q4", "query": "What's the proper way to install pip, virtualenv, and distribute for Python?", "source": "stackoverflow.com/q/4324558"}
+{"qid": "p2_10919569", "class": "Q3", "query": "Install a module using pip for a specific Python version", "source": "stackoverflow.com/q/10919569"}
+{"qid": "p2_2058802", "class": "Q3", "query": "How can I get the version defined in setup.py in my package?", "source": "stackoverflow.com/q/2058802"}
+{"qid": "p2_50821312", "class": "Q4", "query": "What is the effect of using `python -m pip` instead of just `pip`?", "source": "stackoverflow.com/q/50821312"}
+{"qid": "p2_42609943", "class": "Q4", "query": "What is the use case for `pip install -e`?", "source": "stackoverflow.com/q/42609943"}
+{"qid": "p2_7522250", "class": "Q3", "query": "How to include package data with setuptools/distutils?", "source": "stackoverflow.com/q/7522250"}
+{"qid": "p2_26664102", "class": "Q3", "query": "Why can I not create a wheel in Python?", "source": "stackoverflow.com/q/26664102"}
+{"qid": "p2_51342408", "class": "Q6", "query": "How do I install Python packages in Google's Colab?", "source": "stackoverflow.com/q/51342408"}
+{"qid": "p2_32688688", "class": "Q5", "query": "How to write setup.py to include a Git repository as a dependency", "source": "stackoverflow.com/q/32688688"}
+{"qid": "p2_13566200", "class": "Q5", "query": "How can I install from a git subdirectory with pip?", "source": "stackoverflow.com/q/13566200"}
+{"qid": "p2_62408719", "class": "Q5", "query": "Download dependencies declared in pyproject.toml using pip", "source": "stackoverflow.com/q/62408719"}
+{"qid": "p2_24727709", "class": "Q4", "query": "Do Python projects need a MANIFEST.in, and what should be in it?", "source": "stackoverflow.com/q/24727709"}
+{"qid": "p2_29222269", "class": "Q5", "query": "Is there a way to have a conditional requirements.txt file for my application based on platform?", "source": "stackoverflow.com/q/29222269"}
+{"qid": "p2_15724093", "class": "Q4", "query": "Difference between 'python setup.py install' and 'pip install'", "source": "stackoverflow.com/q/15724093"}
+{"qid": "p2_6570635", "class": "Q3", "query": "Installing multiple versions of a package with pip", "source": "stackoverflow.com/q/6570635"}
+{"qid": "p2_41535915", "class": "Q3", "query": "pip install from a local dir", "source": "stackoverflow.com/q/41535915"}
+{"qid": "p2_13916820", "class": "Q3", "query": "How to install a specific version of a package with pip?", "source": "stackoverflow.com/q/13916820"}
+{"qid": "p2_56942670", "class": "Q6", "query": "First and last row cut in half of heatmap plot", "source": "stackoverflow.com/q/56942670"}
+{"qid": "p2_11835396", "class": "Q2", "query": "Why #egg=foo when pip-installing from a git repo", "source": "stackoverflow.com/q/11835396"}
+{"qid": "p2_30239152", "class": "Q5", "query": "Specify extras_require with pip install -e", "source": "stackoverflow.com/q/30239152"}
+{"qid": "p2_2477117", "class": "Q5", "query": "pip requirements.txt with an alternative index", "source": "stackoverflow.com/q/2477117"}
+{"qid": "p2_13270877", "class": "Q3", "query": "How to manually install a PyPI module without pip or easy_install?", "source": "stackoverflow.com/q/13270877"}
+{"qid": "p2_19559247", "class": "Q5", "query": "requirements.txt depending on Python version", "source": "stackoverflow.com/q/19559247"}
+{"qid": "p2_69711606", "class": "Q5", "query": "How to install a package using pip in editable mode with pyproject.toml?", "source": "stackoverflow.com/q/69711606"}
+{"qid": "p2_6947988", "class": "Q4", "query": "When to use a pip requirements file versus install_requires in setup.py?", "source": "stackoverflow.com/q/6947988"}
+{"qid": "p2_39484863", "class": "Q4", "query": "What's the difference between setup.py and setup.cfg in Python projects", "source": "stackoverflow.com/q/39484863"}
+{"qid": "p2_41268863", "class": "Q4", "query": "What is the difference between extras_require and install_requires in setup.py?", "source": "stackoverflow.com/q/41268863"}
+{"qid": "p2_73600082", "class": "Q5", "query": "How to reference a requirements.txt in the pyproject.toml of a setuptools project?", "source": "stackoverflow.com/q/73600082"}
+{"qid": "p2_256417", "class": "Q4", "query": "Python packages and egg-info directories", "source": "stackoverflow.com/q/256417"}
+{"qid": "p2_19534896", "class": "Q3", "query": "Enforcing Python version in setup.py", "source": "stackoverflow.com/q/19534896"}
+{"qid": "p2_15869473", "class": "Q2", "query": "What is the advantage of setting zip_safe to True when packaging a Python project?", "source": "stackoverflow.com/q/15869473"}
+{"qid": "p2_77233855", "class": "Q3", "query": "Why did I get an error ModuleNotFoundError: No module named 'distutils'?", "source": "stackoverflow.com/q/77233855"}
+{"qid": "p2_11472810", "class": "Q4", "query": "How to specify version ranges in install_requires", "source": "stackoverflow.com/q/11472810"}

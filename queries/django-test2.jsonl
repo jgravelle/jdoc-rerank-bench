@@ -1,0 +1,44 @@
+{"qid": "d2_454854", "class": "Q6", "query": "No module named MySQLdb", "source": "stackoverflow.com/q/454854"}
+{"qid": "d2_26646362", "class": "Q6", "query": "NumPy array is not JSON serializable", "source": "stackoverflow.com/q/26646362"}
+{"qid": "d2_1706111", "class": "Q6", "query": "Where can I find the error logs of nginx, using FastCGI?", "source": "stackoverflow.com/q/1706111"}
+{"qid": "d2_23948527", "class": "Q6", "query": "(13: Permission denied) while connecting to upstream in nginx", "source": "stackoverflow.com/q/23948527"}
+{"qid": "d2_6567831", "class": "Q3", "query": "How to perform OR condition in a queryset?", "source": "stackoverflow.com/q/6567831"}
+{"qid": "d2_3748295", "class": "Q3", "query": "Getting the SQL from a QuerySet", "source": "stackoverflow.com/q/3748295"}
+{"qid": "d2_1107737", "class": "Q3", "query": "Numeric for loop in templates", "source": "stackoverflow.com/q/1107737"}
+{"qid": "d2_6574003", "class": "Q3", "query": "Limiting query results", "source": "stackoverflow.com/q/6574003"}
+{"qid": "d2_37205793", "class": "Q4", "query": "values_list vs values", "source": "stackoverflow.com/q/37205793"}
+{"qid": "d2_8000022", "class": "Q3", "query": "In a template, how to look up a dictionary value with a variable", "source": "stackoverflow.com/q/8000022"}
+{"qid": "d2_298772", "class": "Q5", "query": "How can I use the variables from views.py in JavaScript in a <script> tag in a template?", "source": "stackoverflow.com/q/298772"}
+{"qid": "d2_11743207", "class": "Q3", "query": "How to query case-insensitive data in the ORM?", "source": "stackoverflow.com/q/11743207"}
+{"qid": "d2_604266", "class": "Q3", "query": "Set default form values", "source": "stackoverflow.com/q/604266"}
+{"qid": "d2_36153748", "class": "Q2", "query": "makemigrations - No changes detected", "source": "stackoverflow.com/q/36153748"}
+{"qid": "d2_2529472", "class": "Q3", "query": "How do I make a many-to-many field optional?", "source": "stackoverflow.com/q/2529472"}
+{"qid": "d2_1070398", "class": "Q3", "query": "How to assign a value to a variable in a template?", "source": "stackoverflow.com/q/1070398"}
+{"qid": "d2_19875789", "class": "Q2", "query": "Bad Request (400) when DEBUG = False", "source": "stackoverflow.com/q/19875789"}
+{"qid": "d2_5123839", "class": "Q3", "query": "Fastest way to get the first object from a queryset?", "source": "stackoverflow.com/q/5123839"}
+{"qid": "d2_5517950", "class": "Q2", "query": "MEDIA_URL and MEDIA_ROOT", "source": "stackoverflow.com/q/5517950"}
+{"qid": "d2_719915", "class": "Q3", "query": "How to put comments in templates?", "source": "stackoverflow.com/q/719915"}
+{"qid": "d2_501719", "class": "Q5", "query": "Dynamically adding a form to a formset", "source": "stackoverflow.com/q/501719"}
+{"qid": "d2_1387727", "class": "Q3", "query": "Checking for an empty queryset", "source": "stackoverflow.com/q/1387727"}
+{"qid": "d2_4938491", "class": "Q3", "query": "How to change site title, site header and index title in the admin?", "source": "stackoverflow.com/q/4938491"}
+{"qid": "d2_3106295", "class": "Q3", "query": "How to get a list of the fields in a model?", "source": "stackoverflow.com/q/3106295"}
+{"qid": "d2_21458387", "class": "Q5", "query": "TransactionManagementError \"You can't execute queries until the end of the 'atomic' block\" while using signals, but only during unit testing", "source": "stackoverflow.com/q/21458387"}
+{"qid": "d2_4959499", "class": "Q3", "query": "How to add multiple objects to a ManyToMany relationship at once?", "source": "stackoverflow.com/q/4959499"}
+{"qid": "d2_6928692", "class": "Q3", "query": "How to express a one-to-many relationship?", "source": "stackoverflow.com/q/6928692"}
+{"qid": "d2_291945", "class": "Q5", "query": "How do I filter ForeignKey choices in a ModelForm?", "source": "stackoverflow.com/q/291945"}
+{"qid": "d2_2165865", "class": "Q4", "query": "In queries, when to use \"id\" vs \"pk\"?", "source": "stackoverflow.com/q/2165865"}
+{"qid": "d2_7382149", "class": "Q4", "query": "What's the purpose of the SECRET_KEY setting?", "source": "stackoverflow.com/q/7382149"}
+{"qid": "d2_1156246", "class": "Q3", "query": "Having the site serve downloadable files", "source": "stackoverflow.com/q/1156246"}
+{"qid": "d2_5074803", "class": "Q3", "query": "Retrieving parameters from a URL", "source": "stackoverflow.com/q/5074803"}
+{"qid": "d2_25661182", "class": "Q2", "query": "Embedded video refused to display in a frame because it set 'X-Frame-Options' to 'SAMEORIGIN'", "source": "stackoverflow.com/q/25661182"}
+{"qid": "d2_5154358", "class": "Q4", "query": "What is the difference between render(), render_to_response() and direct_to_template()?", "source": "stackoverflow.com/q/5154358"}
+{"qid": "d2_10344197", "class": "Q4", "query": "How does the nested Meta class work?", "source": "stackoverflow.com/q/10344197"}
+{"qid": "d2_15170637", "class": "Q4", "query": "Effects of changing the SECRET_KEY", "source": "stackoverflow.com/q/15170637"}
+{"qid": "d2_907695", "class": "Q5", "query": "In a model's custom save() method, how should you identify a new object?", "source": "stackoverflow.com/q/907695"}
+{"qid": "d2_5255657", "class": "Q5", "query": "How can I disable logging while running unit tests?", "source": "stackoverflow.com/q/5255657"}
+{"qid": "d2_907506", "class": "Q5", "query": "How can I call a custom manage.py command directly from a test driver?", "source": "stackoverflow.com/q/907506"}
+{"qid": "d2_28035119", "class": "Q4", "query": "Should I be adding the migration files to the .gitignore file?", "source": "stackoverflow.com/q/28035119"}
+{"qid": "d2_4879036", "class": "Q4", "query": "\"projects\" vs \"apps\"", "source": "stackoverflow.com/q/4879036"}
+{"qid": "d2_5100539", "class": "Q5", "query": "CSRF check failing with an Ajax POST request", "source": "stackoverflow.com/q/5100539"}
+{"qid": "d2_7981837", "class": "Q4", "query": "aggregate() vs annotate()", "source": "stackoverflow.com/q/7981837"}
+{"qid": "d2_6069070", "class": "Q5", "query": "How to use permission_required decorators on class-based views", "source": "stackoverflow.com/q/6069070"}
