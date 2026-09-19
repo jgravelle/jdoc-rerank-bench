@@ -52,7 +52,7 @@ The name is `rerank` everywhere. `semantic` already means embedding fusion in
 4. **Rerank** between dedupe and the truncation at lines 346 to 362. Bodies come
    from `index._ensure_content(sec)`, which `attach_scores` already calls per
    row. Passage text is heading path (walk `parent_id`) plus body, 512-token cap.
-   Length-sorted sub-batches of 4.
+   One passage per inference call (see "Measured 2026-09-19").
 5. **Truncate** to `max_results`.
 
 ### The three `_score` consumers must not see the reranked order
@@ -121,7 +121,7 @@ Every failure returns the retrieval order inside the normal time budget.
   existing warm-up hook for embedding providers is the model to copy, including
   its provider-aware cache probe: "cached for torch" is not "cached for ONNX").
 - Deadline: checked between sub-batches. onnxruntime cannot be interrupted
-  inside a batch, so the worst case overrun is one sub-batch of 4.
+  inside a call, so the worst case overrun is one passage.
 
 ## Disclosure (required before release)
 
@@ -150,17 +150,33 @@ README before it ships.
 - Replay gate: unchanged with the provider unset. A second replay run with
   `local` is informative only and is not a gate.
 
+## Measured 2026-09-19 (`results/deploy-2026-09-19.md`, dev pools only)
+
+- **int8 scores depend on what else is in the batch.** The file uses dynamic
+  quantization, so activation ranges are set per batch. With sub-batches of 4,
+  the same passage moved by up to 0.86 in logit when the pool around it changed,
+  and the top 5 changed on 26 of 64 Kubernetes queries. With one passage per
+  call the drift is 0.0000 and 0 of 64 change. Aggregate nDCG was the same either
+  way (+0.098 vs +0.107 on FastAPI), so this is a reproducibility defect, not a
+  quality one. **Ship one passage per call.** It was not slower in any run.
+- **fastembed `add_custom_model` works** for `onnx/model_quantized.onnx` and
+  matches direct onnxruntime on every parity number. Use it: no second code path,
+  and it takes `threads=`. It does not length-sort, which no longer matters.
+- **Thread cap.** 24-core box. Default threads: p50 230 to 281 ms. Capped at 4:
+  284 to 360 ms through fastembed. Capped at 2: 448 to 514 ms. Start at 4.
+  Timings on this box varied up to 2x between runs while it was busy, so these
+  are indicative and need a quiet re-run before they are quoted anywhere.
+- **Cold start, model already on disk:** load 0.7 to 3.0 s across 12 fresh
+  processes. The first query was not slower than later ones, so the cost is the
+  load, and a warm-up at server start removes it from the request path.
+  The 23.1 MB download was not timed.
+- **Known limitation for v1, not a blocker (J., 2026-09-19):** the model is
+  English ms-marco. Non-English and code-heavy sections are unmeasured.
+
 ## Open questions
 
-1. **int8 through fastembed is unmeasured.** The harness loaded
-   `model_quantized.onnx` with onnxruntime directly. `TextCrossEncoder.
-   add_custom_model` exists in 0.8.0 and takes a model file, but I have not run
-   it. The alternative is onnxruntime + tokenizers + huggingface_hub directly,
-   all of which the extra already installs. Measure both before choosing.
-2. **Thread count.** onnxruntime defaults to all cores. Inside an MCP server
-   beside an embedder that may be too greedy. Unmeasured.
-3. **First-query cost.** Model load measured 174 ms warm. Cold download and
-   first-inference warm-up are unmeasured.
-4. **English only.** The ms-marco model is English. Behaviour on other languages
+1. **Download time** for the 23.1 MB file on a first run is unmeasured.
+2. **A quiet-machine latency re-run** at 4 threads, one passage per call.
+3. **English only.** The ms-marco model is English. Behaviour on other languages
    and on code-heavy sections is unmeasured.
 5. **Rank transform.** Set by `DECISION_CRITERIA.md`, not here.

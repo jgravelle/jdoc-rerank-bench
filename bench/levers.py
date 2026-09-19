@@ -27,7 +27,7 @@ FILES = {"fp32": "onnx/model.onnx", "int8": "onnx/model_quantized.onnx"}
 
 
 class Ort:
-    def __init__(self, weights: str, max_tokens: int):
+    def __init__(self, weights: str, max_tokens: int, threads: int | None = None):
         import onnxruntime as ort
         from huggingface_hub import hf_hub_download
         from tokenizers import Tokenizer
@@ -35,7 +35,11 @@ class Ort:
         self.tok = Tokenizer.from_file(hf_hub_download(REPO, "tokenizer.json"))
         self.tok.enable_truncation(max_length=max_tokens)
         self.tok.enable_padding()
-        self.sess = ort.InferenceSession(hf_hub_download(REPO, FILES[weights]), providers=["CPUExecutionProvider"])
+        so = ort.SessionOptions()
+        if threads:
+            so.intra_op_num_threads, so.inter_op_num_threads = threads, 1
+        self.sess = ort.InferenceSession(hf_hub_download(REPO, FILES[weights]), sess_options=so,
+                                         providers=["CPUExecutionProvider"])
         self.inputs = {i.name for i in self.sess.get_inputs()}
 
     bucket = 0  # >0: run length-sorted sub-batches so short passages skip the padding
