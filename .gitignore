@@ -7,3 +7,5 @@ __pycache__/
 label_tasks/
 .venv-onnx/
 audit/
+.venv-fe/
+store-fe/
