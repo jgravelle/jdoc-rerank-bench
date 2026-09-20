@@ -61,6 +61,10 @@ def main(argv=None) -> int:
     ap.add_argument("--prefix", required=True)
     ap.add_argument("--want", default="Q5=9,Q4=4",
                     help="per-class caps, e.g. 'Q5=9,Q4=4'. Spread beats one corpus carrying a stratum.")
+    ap.add_argument("--batch", default="batch3",
+                    help="batch label: names the output file and the `sourced` field. "
+                         "⚠ Reading further into the CACHED draw is not a new draw, so the "
+                         "frozen phrase lists stay frozen across batches.")
     a = ap.parse_args(argv)
 
     targets = {k: int(v) for k, v in (p.split("=") for p in a.want.split(","))}
@@ -118,9 +122,9 @@ def main(argv=None) -> int:
             kept.append({"qid": qid, "class": cls, "query": title,
                          "source": f"stackoverflow.com/q/{it['question_id']}",
                          "so_score": it.get("score"), "so_tags": it.get("tags", []),
-                         "sourced": "batch3-stratified"})
+                         "sourced": f"{a.batch}-stratified"})
 
-    dest = ROOT / f"queries/_draft/a6-batch3-{a.corpus}.jsonl"
+    dest = ROOT / f"queries/_draft/a6-{a.batch}-{a.corpus}.jsonl"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text("\n".join(json.dumps(r) for r in kept) + "\n", encoding="utf-8")
     print(f"wrote {len(kept)} -> {dest.name}")

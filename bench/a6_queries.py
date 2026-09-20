@@ -136,9 +136,17 @@ def jaccard(a: set[str], b: set[str]) -> float:
     return len(a & b) / len(a | b) if (a or b) else 0.0
 
 
-def fetch(tag: str, pages: int) -> list[dict]:
+def fetch(tag: str, pages: int, start_page: int = 1) -> list[dict]:
+    """Top-voted-by-tag, `pages` pages of 100 from `start_page`.
+
+    ⚠ `start_page` exists so a later batch can read DEEPER into the same
+    top-voted ordering rather than switching method. Pages 1-5 produced the
+    frozen splits, so a re-draw there collides with them by construction; the
+    source-id exclusion drops those rows, and reading page 6 onward is how the
+    same method still yields something.
+    """
     out = []
-    for page in range(1, pages + 1):
+    for page in range(start_page, start_page + pages):
         url = (f"{API}?order=desc&sort=votes&tagged={tag}&site=stackoverflow"
                f"&pagesize=100&page={page}")
         req = urllib.request.Request(
@@ -158,28 +166,46 @@ def fetch(tag: str, pages: int) -> list[dict]:
 
 
 def cmd_reclassify(a) -> int:
-    """Re-apply the heuristic, then the hand review, in place."""
+    """Re-apply the heuristic, then the hand review, in place.
+
+    ⚠⚠ A review value of `"DROP"` REMOVES the row. That is the pre-registered
+    action for a row the heuristic put in a stratum it does not belong to —
+    `A6-sourcing-batch4.md` §5, "dropped, never relabelled". It exists so that a
+    row whose honest class would HELP a floor under pressure can be removed
+    instead of promoted: `pk44984239` classified Q5 on the word "both" and is a
+    two-tool comparison the corpus answers on ONE page, so it is neither Q5 nor
+    an honest Q6, and relabelling it Q4 is exactly the move the lock forbids.
+    """
     review = {k: v for k, v in json.loads((ROOT / a.review).read_text(encoding="utf-8")).items()
               if not k.startswith("_")}
     before, after, changed, applied, seen = collections.Counter(), collections.Counter(), 0, 0, set()
+    dropped = []
     per_file = {}
     for name in a.files:
         p = ROOT / name
         rows = [json.loads(x) for x in p.read_text(encoding="utf-8").splitlines() if x.strip()]
+        kept = []
         for r in rows:
             before[r["class"]] += 1
             new = classify(r["query"])
             if r["qid"] in review:
                 new, _ = review[r["qid"]], seen.add(r["qid"])
                 applied += 1
+            if new == "DROP":
+                dropped.append(r["qid"])
+                continue
             changed += new != r["class"]
             r["class"] = new
             after[new] += 1
+            kept.append(r)
+        rows = kept
         p.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
         per_file[Path(name).stem] = collections.Counter(r["class"] for r in rows)
     print("before:", dict(sorted(before.items())))
     print("after: ", dict(sorted(after.items())))
     print(f"changed {changed} of {sum(after.values())}; overrides applied {applied}")
+    if dropped:
+        print(f"DROPPED {len(dropped)} rows by hand review: {dropped}")
     stale = sorted(set(review) - seen)
     if stale:
         print(f"⚠ {len(stale)} override qids matched no row (typo?): {stale[:8]}")
@@ -191,9 +217,11 @@ def cmd_reclassify(a) -> int:
 def cmd_fetch(a) -> int:
     sq, st, ss = spent()
     print(f"spent: {len(sq)} qids, {len(st)} texts, {len(ss)} source questions")
-    items = fetch(a.tag, a.pages)
-    print(f"fetched {len(items)} questions for tag {a.tag}")
+    items = fetch(a.tag, a.pages, a.start_page)
+    print(f"fetched {len(items)} questions for tag {a.tag} "
+          f"(pages {a.start_page}-{a.start_page + a.pages - 1})")
     rows, drop_qid, drop_dup, seen = [], 0, 0, set()
+    drop_class = collections.Counter()
     for it in items:
         if len(rows) >= a.want:
             break
@@ -206,14 +234,23 @@ def cmd_fetch(a) -> int:
         if any(jaccard(t, s) >= 0.85 for s in st):
             drop_dup += 1
             continue
+        cls = classify(title)
+        # ⚠ A row outside the wanted stratum is DROPPED, never relabelled.
+        if a.only_class and cls != a.only_class:
+            drop_class[cls] += 1
+            continue
         seen.add(qid)
-        rows.append({"qid": qid, "class": classify(title), "query": title,
-                     "source": f"stackoverflow.com/q/{it['question_id']}",
-                     "so_score": it.get("score"), "so_tags": it.get("tags", [])})
+        row = {"qid": qid, "class": cls, "query": title,
+               "source": f"stackoverflow.com/q/{it['question_id']}",
+               "so_score": it.get("score"), "so_tags": it.get("tags", [])}
+        if a.sourced:
+            row["sourced"] = a.sourced
+        rows.append(row)
     dest = ROOT / a.out
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
-    print(f"wrote {len(rows)} -> {a.out}  (dropped {drop_qid} spent/dup-id, {drop_dup} near-dup text)")
+    print(f"wrote {len(rows)} -> {a.out}  (dropped {drop_qid} spent qid/source, "
+          f"{drop_dup} near-dup text, {sum(drop_class.values())} wrong stratum {dict(drop_class)})")
     print("provisional classes:", dict(sorted(collections.Counter(r["class"] for r in rows).items())))
     return 0
 
@@ -231,6 +268,12 @@ def main(argv=None) -> int:
     f.add_argument("--out", required=True)
     f.add_argument("--want", type=int, default=80)
     f.add_argument("--pages", type=int, default=5)
+    f.add_argument("--start-page", type=int, default=1, dest="start_page",
+                   help="read deeper into the same top-voted ordering; pages 1-5 "
+                        "produced the frozen splits")
+    f.add_argument("--only-class", default=None, dest="only_class",
+                   help="keep only this class; others are DROPPED, never relabelled")
+    f.add_argument("--sourced", default=None, help="provenance label written on each row")
     f.set_defaults(f=cmd_fetch)
     a = ap.parse_args(argv)
     if not getattr(a, "f", None):

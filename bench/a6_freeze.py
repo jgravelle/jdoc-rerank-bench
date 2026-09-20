@@ -41,8 +41,14 @@ CORPORA = ["packaging", "pytest", "fastapi", "django"]
 
 # results/LABEL-DESIGN-A6.md section 2. Targets, not minima; the floors are
 # asserted separately in `check_floors` so a quota edit cannot lower a floor.
-TEST_QUOTA = {"Q3": 90, "Q4": 35, "Q5": 35, "Q6": 20, "Q2": 18}
-DEV_QUOTA = {"Q3": 40, "Q4": 20, "Q5": 20}
+#
+# ⚠ Q3–Q5 sum to §2's pooled TARGETS exactly: test 150, dev 80. They were 90/35/35
+# and 40/20/20 when the drafts still held the 95 spent-source rows; after that
+# exclusion Q3 could not supply 130, so the mass moved onto Q4 and Q5, which
+# batch 4 refilled. **Nothing here is below a §2 floor** — `check_floors` reads
+# TEST_FLOOR / DEV_FLOOR, never these, so a quota edit cannot lower a floor.
+TEST_QUOTA = {"Q3": 76, "Q4": 38, "Q5": 36, "Q6": 20, "Q2": 18}
+DEV_QUOTA = {"Q3": 36, "Q4": 22, "Q5": 22}
 
 # Section 2's "honest minimum" column.
 TEST_FLOOR = {"Q3": 30, "Q4": 30, "Q5": 30, "Q6": 10, "Q2": 15}
@@ -50,6 +56,10 @@ TEST_RANKING_FLOOR = 150
 DEV_FLOOR = {"Q3": 12, "Q4": 12, "Q5": 12}
 DEV_RANKING_FLOOR = 60
 DEV_RANKING_TARGET = 80  # under this, record as underpowered
+# Not a §2 number. A corpus absent from dev means the T grid is selected on a
+# population the test split does not match; see the rebalance in main().
+MIN_DEV_RANK_PER_CORPUS = 5
+PER_CORPUS_TEST_AIM = (30, 45)  # §2, an AIM: reported when missed, never enforced
 
 
 def largest_remainder(total: int, avail: dict[str, int]) -> dict[str, int]:
@@ -215,45 +225,131 @@ def main(argv=None) -> int:
         left = {c: avail[cls][c] - quota["test"][cls][c] for c in CORPORA}
         quota["dev"][cls] = largest_remainder(DEV_QUOTA[cls], left)
 
-    # 3. Q3 equalizes ranking mass per corpus, as far as each corpus can supply it.
-    want = {}
-    for split, q in (("test", TEST_QUOTA), ("dev", DEV_QUOTA)):
-        ranking_total = sum(q[c] for c in ("Q3", "Q4", "Q5"))
-        base, rem = divmod(ranking_total, len(CORPORA))
-        target = {c: base + (1 if i < rem else 0) for i, c in enumerate(CORPORA)}
-        w = {}
-        for c in CORPORA:
-            already = quota[split]["Q4"][c] + quota[split]["Q5"][c]
-            if target[c] - already < 0:
-                raise ValueError(f"{split}/{c}: Q4+Q5 already {already} > {target[c]}")
-            w[c] = target[c] - already
-        want[split] = w
-
-    # ⚠ packaging has 36 Q3 and perfect evenness asks for 37 across both splits.
-    # The repair MOVES the shortfall to a corpus with spare Q3 rather than
-    # shrinking the pooled Q3 total: the floors are stated on the pooled figure,
-    # and a corpus one query light is a smaller distortion than a thinner split.
-    # Test absorbs the move because it has slack over its floor; dev is already at
-    # its target. Deterministic: most spare first, then by corpus name.
+    # 3. Q3 brings each corpus as close to even ranking mass as it can supply.
+    #
+    # ⚠⚠ This does NOT force evenness, and the earlier version that tried to spun
+    # forever: django's usable ranking mass is 35 across BOTH splits, so an even
+    # test share of 37-38 is not reachable from any Q3 allocation. §2's per-corpus
+    # evenness is an AIM ("roughly even… about 30-45"); the class floors are the
+    # requirement. A corpus that cannot reach the aim is REPORTED under it, never
+    # padded from another class and never silently dropped.
+    q3_total = TEST_QUOTA["Q3"] + DEV_QUOTA["Q3"]
+    ideal_rank = (sum(TEST_QUOTA[c] for c in ("Q3", "Q4", "Q5"))
+                  + sum(DEV_QUOTA[c] for c in ("Q3", "Q4", "Q5"))) / len(CORPORA)
+    q3 = {}
     for c in CORPORA:
-        over = want["test"][c] + want["dev"][c] - avail["Q3"][c]
-        while over > 0:
-            if want["test"][c] == 0:
-                raise ValueError(f"{c}: {over} Q3 short and test cannot give more")
-            want["test"][c] -= 1
-            spare = sorted(CORPORA,
-                           key=lambda x: (-(avail["Q3"][x] - want["test"][x] - want["dev"][x]), x))
-            for dest in spare:
-                if avail["Q3"][dest] - want["test"][dest] - want["dev"][dest] > 0:
-                    want["test"][dest] += 1
-                    print(f"  ⚠ Q3 test: moved 1 from {c} (only {avail['Q3'][c]} available) "
-                          f"to {dest}")
+        already = sum(quota[s][k][c] for s in ("test", "dev") for k in ("Q4", "Q5"))
+        q3[c] = max(0, min(avail["Q3"][c], round(ideal_rank - already)))
+    # Hand the remainder to whoever still has Q3, most spare first, then by name.
+    while sum(q3.values()) != q3_total:
+        step = 1 if sum(q3.values()) < q3_total else -1
+        pool = sorted(CORPORA, key=lambda x: (-(avail["Q3"][x] - q3[x]), x))
+        if step < 0:
+            pool = sorted(CORPORA, key=lambda x: (-q3[x], x))
+        for c in pool:
+            if 0 <= q3[c] + step <= avail["Q3"][c]:
+                q3[c] += step
+                break
+        else:
+            raise ValueError(f"Q3 cannot reach {q3_total} under caps {avail['Q3']}")
+    # Split each corpus's Q3 between test and dev in the quota ratio.
+    quota["test"]["Q3"] = {}
+    quota["dev"]["Q3"] = {}
+    for c in CORPORA:
+        t = round(q3[c] * TEST_QUOTA["Q3"] / q3_total)
+        quota["test"]["Q3"][c], quota["dev"]["Q3"][c] = t, q3[c] - t
+    for split, target in (("test", TEST_QUOTA["Q3"]), ("dev", DEV_QUOTA["Q3"])):
+        while sum(quota[split]["Q3"].values()) != target:
+            step = 1 if sum(quota[split]["Q3"].values()) < target else -1
+            other = "dev" if split == "test" else "test"
+            for c in sorted(CORPORA, key=lambda x: (-quota[other]["Q3"][x], x)):
+                if quota[other]["Q3"][c] - step >= 0 and quota[split]["Q3"][c] + step >= 0:
+                    quota[split]["Q3"][c] += step
+                    quota[other]["Q3"][c] -= step
                     break
             else:
-                raise ValueError(f"{c}: {over} Q3 short and no corpus has spare")
-            over -= 1
-    for split in ("test", "dev"):
-        quota[split]["Q3"] = want[split]
+                raise ValueError(f"cannot rebalance Q3 between splits to {target}")
+
+    # 3b. Even out per-corpus TEST ranking mass by trading test/dev shares between
+    # corpora. ⚠ Every move is a SWAP — one row of class k goes dev→test in the
+    # thin corpus and test→dev in the fat one — so per-class test and dev totals,
+    # and every per-corpus availability cap, are unchanged by construction. It can
+    # only move §2's per-corpus aim, never a floor.
+    #
+    # ⚠ This is the ONLY lever left for django: its 11 usable Q3 are fully spent,
+    # so no cross-corpus Q3 move can reach it. Shifting its own rows toward test is
+    # what takes it from 21 to the aim.
+    def test_rank() -> dict[str, int]:
+        return {c: sum(quota["test"][k][c] for k in ("Q3", "Q4", "Q5")) for c in CORPORA}
+
+    def dev_rank(c: str) -> int:
+        return sum(quota["dev"][k][c] for k in ("Q3", "Q4", "Q5"))
+
+    def used(k: str, c: str) -> int:
+        return quota["test"][k][c] + quota["dev"][k][c]
+
+    # 3a. Move a TEST row of one class from the fattest corpus to the thinnest one
+    # that still has an UNUSED row of that class. ⚠ The swap pass below can only
+    # trade a corpus's own rows between test and dev; it cannot reach rows that
+    # `largest_remainder` gave to another corpus. django sat at 28 with 2 usable
+    # rows unallocated until this ran. Class totals are preserved: one corpus
+    # loses a row of class k in test, another gains one.
+    for _ in range(500):
+        tr = test_rank()
+        moved = False
+        for lo in sorted(CORPORA, key=lambda c: (tr[c], c)):
+            if tr[lo] >= PER_CORPUS_TEST_AIM[0]:
+                break
+            for hi in sorted(CORPORA, key=lambda c: (-tr[c], c)):
+                if tr[hi] - tr[lo] <= 2:
+                    continue
+                for k in ("Q4", "Q5", "Q3"):
+                    if quota["test"][k][hi] > 0 and used(k, lo) < avail[k][lo]:
+                        quota["test"][k][hi] -= 1
+                        quota["test"][k][lo] += 1
+                        moved = True
+                        break
+                if moved:
+                    break
+            if moved:
+                break
+        if not moved:
+            break
+
+    for _ in range(500):
+        tr = test_rank()
+        moved = False
+        # ⚠ Try every (fat, thin) PAIR, not only the extremes. Stopping at the
+        # first blocked pair left pytest at 49 because django — the thinnest — had
+        # already hit the dev floor, so the fat corpus never got to shed to the
+        # second-thinnest.
+        for hi in sorted(CORPORA, key=lambda c: (-tr[c], c)):
+            for lo in sorted(CORPORA, key=lambda c: (tr[c], c)):
+                if tr[hi] - tr[lo] <= 2:
+                    continue
+                # ⚠⚠ A corpus may not be emptied out of DEV to even up TEST. Without
+                # this floor django went to dev 0, so the T grid would be selected
+                # with no django and applied to a test split that is ~28 of 150
+                # django — selection on a different population.
+                if dev_rank(lo) <= MIN_DEV_RANK_PER_CORPUS:
+                    continue
+                # Take from whichever class `lo` has most of in dev, so a corpus
+                # does not end up represented in dev by one class only.
+                for k in sorted(("Q3", "Q4", "Q5"),
+                                key=lambda x: (-quota["dev"][x][lo], x)):
+                    if quota["test"][k][hi] > 0 and quota["dev"][k][lo] > 0:
+                        quota["test"][k][hi] -= 1
+                        quota["dev"][k][hi] += 1
+                        quota["test"][k][lo] += 1
+                        quota["dev"][k][lo] -= 1
+                        moved = True
+                        break
+                if moved:
+                    break
+            if moved:
+                break
+        if not moved:
+            break
 
     # 4. Controls and literals, test only, spread evenly.
     for cls in ("Q6", "Q2"):
@@ -316,6 +412,12 @@ def main(argv=None) -> int:
             cc = collections.Counter(r["class"] for r in out[s][c])
             rank_c = sum(cc[k] for k in ("Q3", "Q4", "Q5"))
             print(f"    {c}: {dict(sorted(cc.items()))} | ranking {rank_c}")
+    lo_aim, hi_aim = PER_CORPUS_TEST_AIM
+    for c in CORPORA:
+        rank_c = sum(1 for r in out["test"][c] if r["class"] in ("Q3", "Q4", "Q5"))
+        if not lo_aim <= rank_c <= hi_aim:
+            print(f"⚠ test/{c}: ranking mass {rank_c} outside §2's per-corpus aim "
+                  f"{lo_aim}-{hi_aim}; an AIM, not a floor — disclose in the memo")
     dev_ranking = sum(counts["dev"][c] for c in ("Q3", "Q4", "Q5"))
     if dev_ranking < DEV_RANKING_TARGET:
         print(f"⚠ dev Q3-Q5 pooled {dev_ranking} < target {DEV_RANKING_TARGET}: "
