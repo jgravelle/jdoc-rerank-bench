@@ -1,0 +1,540 @@
+"pip install --editable ./" vs "python setup.py develop"
+"projects" vs "apps"
+'pip' is not recognized as an internal or external command
+(13: permission denied) while connecting to upstream in nginx
+__call__() missing 1 required positional argument: 'send' on app engine
+a minimal example loading index.html
+a way to access the request object globally
+a way to handle multiple request content types
+accessing dependencies in background tasks
+aggregate() vs annotate()
+allow scheduling of pods on the master?
+api - get pods on specific nodes
+api calls run in serial instead of parallel fashion
+architecture flask vs fastapi
+asgi 'lifespan' protocol appears unsupported
+assign an external ip to a service
+asyncpg - cannot perform operation: another operation is in progress
+at least one invalid signature was encountered during apt-get update in the image build
+attributeerror: 'depends' object has no attribute 'query'
+auto_now and auto_now_add
+automatically remove completed jobs created by a cronjob
+automating the python package release process
+bad request (400) when debug = false
+basic authentication for the swagger docs while the endpoints use api key header authentication
+best practice for runtime config from the command line when launching the app
+best practice for trailing slashes on endpoints
+best practices for storing configuration in source control
+best way to mount one single file into a pod
+can "list_display" in a modeladmin display attributes of foreignkey fields?
+can a pvc be bound to a specific pv?
+can background tasks be used in the startup event for a long-running loop
+can i access constants in settings.py from templates?
+can i add comments to a pip requirements file?
+can i connect one service account to multiple namespaces?
+can i modify a container's environment variables without restarting the pod
+can i use autocompletion for kubectl in zsh?
+can i use more than one query parameter model
+can you connect to amazon elasticache redis outside of amazon?
+can't compare naive and aware datetime.now() <= challenge.datetime_end
+can't delete persistentvolumeclaim (pvc)
+cannot connect to the docker daemon at unix:///var/run/docker.sock. is the docker daemon running?
+cannot pull image from a private docker image repository
+catch exception globally
+checking for an empty queryset
+checking pod cpu and memory utilization
+clean up old replica sets when updating deployments
+cni vs kube-proxy
+command to delete all pods in all namespaces
+communication between multiple docker-compose projects
+compose: wait for container x before starting y
+connecting to postgresql in a container from outside
+convert a model object to a dict with all of the fields intact
+copy in a dockerfile but with exclusion
+copying files from a container to the host
+cors: cannot use wildcard in access-control-allow-origin when credentials flag is true
+cpu multithreading
+creating a json response
+cross origin requests from my javascript frontend are blocked
+csrf check failing with an ajax post request
+custom validation of query parameters using pydantic models
+customizing the swagger documentation
+databaseerror: current transaction is aborted, commands ignored until end of transaction block
+datetime issues with default=datetime.now()
+dealing with multiple python versions and pip
+debug application in vscode
+decoding a secret
+define query string parameters with a pydantic model
+delete all jobs in bulk
+dependencies with websockets
+dependency injection during the startup process
+dependency vs middleware
+deployments vs statefulsets
+did you specify the right host or port? error
+difference between 'python setup.py install' and 'pip install'
+difference between a controller and an operator
+difference between a persistent volume and a persistent volume claim in simple terms
+difference between apache mesos and kubernetes
+difference between clusterip, nodeport and loadbalancer service types
+difference between docker entrypoint and the container spec command
+difference between nodeport and loadbalancer?
+difference between run and cmd in a dockerfile
+difference between targetport and port in a service definition
+differences between distribute, distutils, setuptools and distutils2?
+differences between sidecar, ambassador and adapter pattern
+disable logging for certain endpoints
+disabling a cronjob
+display the choice value
+displaying validation errors to end users
+do asynchronous background tasks block other requests?
+do python projects need a manifest.in, and what should be in it?
+docker complains about "no space left on device", how to clean up?
+docker push error: denied: requested access to the resource is denied
+download dependencies declared in pyproject.toml using pip
+dynamically adding a form to a formset
+effects of changing the secret_key
+embedded video refused to display in a frame because it set 'x-frame-options' to 'sameorigin'
+enforcing python version in setup.py
+equivalent of docker env-file
+error "filename.whl is not a supported wheel on this platform"
+error "the input device is not a tty"
+error 422 with post request when sending json data
+error loading asgi app. could not import module "api"
+error: unable to find vcvarsall.bat
+exclude multiple fields from model
+exec commands on pods with root access
+execute bash command in pod with kubectl?
+expired certificate
+explain python entry points
+exploring a container's file system
+fastest way to get the first object from a queryset?
+first and last row cut in half of heatmap plot
+for a helm chart, what versions are available
+from inside a container, how do i connect to the localhost of the machine?
+generate documentation for websocket endpoints
+generic exception handler to capture all types of exception
+get client real ip
+get request results in type error (value is not a valid dict)
+get return status from background tasks
+get the app version from pyproject.toml inside python code
+get the yaml for deployed services
+getting the sql from a queryset
+having the site serve downloadable files
+helm install unknown flag --name
+helm not creating the resources
+helm range without leaving global scope
+helm stuck with an update in progress
+helm upgrade failed: another operation is in progress
+hide the input from the response on a 422 validation error
+how can i call a custom manage.py command directly from a test driver?
+how can i debug imagepullbackoff
+how can i disable logging while running unit tests?
+how can i enable cors?
+how can i filter a query with a list of values?
+how can i find the list of field selectors supported by kubectl for a given resource type?
+how can i get headers or a specific header from my backend api?
+how can i get the full/absolute url (with domain)?
+how can i get the version defined in setup.py in my package?
+how can i install from a git subdirectory with pip?
+how can i install packages offline?
+how can i install packages using pip according to the requirements.txt file from a local directory?
+how can i keep a container running
+how can i list the taints on nodes
+how can i mock the request in tests
+how can i remove old and unused images?
+how can i run the server using pycharm?
+how can i see the raw sql queries being run?
+how can i store a binary file in a configmap?
+how can i temporarily disable a foreign key constraint in mysql?
+how can i trigger a scheduled job manually
+how can i update a secret when it is generated from a file
+how can i use environment variables in docker-compose?
+how can i use local docker images with minikube?
+how can i use the variables from views.py in javascript in a <script> tag in a template?
+how can the or selector be used with labels?
+how do i access the kubernetes api from within a pod container
+how do i assign a port mapping to an existing container?
+how do i clone a model instance object and save it to the database?
+how do i define an optional field with a description?
+how do i delete a pv in the correct manner
+how do i delete clusters and contexts from kubectl config
+how do i do a not equal in queryset filtering?
+how do i filter foreignkey choices in a modelform?
+how do i filter query objects by date range?
+how do i force kubernetes to re-pull an image
+how do i get a console-like connection into a container's shell?
+how do i get logs from all pods of a replication controller
+how do i get the object if it exists, or none if it does not exist?
+how do i get the user's ip address?
+how do i install a python package with a .whl file?
+how do i install gke-gcloud-auth-plugin on a mac m1 with zsh
+how do i install pip on windows?
+how do i install python packages in google's colab?
+how do i list the files inside a python wheel?
+how do i make a many-to-many field optional?
+how do i pass arguments to main.py when it is run by uvicorn
+how do i pass environment variables to containers?
+how do i return an image?
+how do i send list of dictionaries as body parameter together with files?
+how do i solve "error: externally-managed-environment" every time i use pip?
+how do i update or upgrade pip itself from inside my virtual environment?
+how do you cleanly list all the containers in a pod?
+how do you find the cluster and service cidr of a cluster?
+how do you get a pod's name from its ip address?
+how do you handle errors that occur in middleware
+how do you properly reuse an httpx.asyncclient within an application?
+how does fastapi record response time per request in a database
+how does fastapi/uvicorn parallelize requests?
+how does kubectl port-forward create a connection
+how does one set up a global timeout for all requests
+how does the nested meta class work?
+how is docker different from a virtual machine?
+how many uvicorn workers do i have to have in production?
+how to access python package metadata from within the python console?
+how to add a description or bearerformat to security scheme objects in openapi
+how to add both file and json body in a post request?
+how to add multiple objects to a manytomany relationship at once?
+how to assign a value to a variable in a template?
+how to avoid 504 gateway timeout errors on slow endpoints
+how to build a c extension in keeping with pep 517, i.e. with pyproject.toml instead of setup.py?
+how to build a source distribution without using a setup.py file?
+how to capture arbitrary paths at one route?
+how to change repository name or rename an image?
+how to change site title, site header and index title in the admin?
+how to check if a user is logged in (how to properly use user.is_authenticated)?
+how to check the django version
+how to clear crashloopbackoff
+how to combine multiple querysets?
+how to configure a non-default serviceaccount on a deployment
+how to configure kubectl with cluster information from a .conf file?
+how to convert json data into a python object?
+how to copy files from pods to the local system
+how to copy images from one host to another without using a repository
+how to create a kubectl config file for serviceaccount
+how to customize the authorize form fields in swagger
+how to deal with persistent storage (e.g. databases) in containers
+how to define a configmap built using a file in a yaml?
+how to define two fields "unique" as a couple
+how to delete a node label by command and api
+how to delete a record in models?
+how to delete all resources at one time?
+how to delete the file after a return fileresponse(file_path)
+how to delete the file after returning a fileresponse
+how to disable swagger ui documentation for production server?
+how to disable the default 422 response in the docs
+how to do an or filter in a query?
+how to do multiprocessing
+how to do persistent database connection?
+how to download a persistentvolume's content
+how to easily distribute python software that has python module dependencies?
+how to execute a python script from the shell?
+how to execute multiple commands with compose?
+how to expose a headless kafka service for a statefulset externally
+how to express a one-to-many relationship?
+how to filter empty or null names in a queryset?
+how to find the url of a service?
+how to force a clean build of an image
+how to force delete a namespace?
+how to generate a yaml template with a kubectl command?
+how to get a container's ip address from the host
+how to get a list of the fields in a model?
+how to get async/await functionality to work properly?
+how to get current path with domain?
+how to get get request values?
+how to get the current namespace of the current context using kubectl
+how to get the current url within a template?
+how to give a pydantic list field a default value?
+how to gracefully remove a node from the cluster
+how to hide certain fields of a model in the response
+how to include files outside of the build context?
+how to include package data with setuptools/distutils?
+how to initialize a global object or variable and reuse it in every endpoint?
+how to install a package using pip in editable mode with pyproject.toml?
+how to install a specific version of a package with pip?
+how to know a pod's own ip address from inside a container in the pod
+how to list containers
+how to list dependencies for a python library without installing it?
+how to log raw http request/response?
+how to login/enter in a pod
+how to make a deployment update its image
+how to make a list of uploaded files optional
+how to manage local vs production settings?
+how to manually install a pypi module without pip or easy_install?
+how to merge a kubectl config file with ~/.kube/config
+how to mimic '--volumes-from'
+how to mount a host directory in a container
+how to mount a postgresql volume using aws ebs
+how to mount multiple files / secrets into common directory?
+how to pass image pull secret while using 'kubectl run' command?
+how to perform or condition in a queryset?
+how to pip install a package with a min and max version range?
+how to pull environment variables with helm charts
+how to push an image to a private repository
+how to put comments in templates?
+how to query as group by?
+how to query case-insensitive data in the orm?
+how to read body as any valid json?
+how to rebuild a container in docker-compose.yml?
+how to reference a requirements.txt in the pyproject.toml of a setuptools project?
+how to remove old containers
+how to reset the admin password?
+how to return a htmlresponse
+how to return data in json format?
+how to revert the last migration?
+how to rolling restart pods without changing deployment yaml?
+how to run a thread in the background?
+how to run application from poetry?
+how to run containers sequentially as a job?
+how to run uvicorn in heroku?
+how to save uploadfile
+how to secure api endpoint with jwt token based authorization?
+how to serve static files
+how to set multiple commands for a container in one yaml file
+how to set response_model_by_alias globally
+how to set up and tear down a database between tests?
+how to set volume mount user group and file permissions
+how to share storage between pods?
+how to specify a static ip address for a load balancer?
+how to specify version ranges in install_requires
+how to ssh into a node or server
+how to start uvicorn in background when testing with pytest
+how to state a direct github source in requirements.txt
+how to stop or pause a pod
+how to switch namespace
+how to test an endpoint that uses lifespan function?
+how to test background tasks
+how to update or upgrade a package using pip?
+how to upgrade kubectl client version
+how to upload a file?
+how to use "get_or_create()"?
+how to use a pydantic model with form data?
+how to use a router level dependency in the routes
+how to use httpexception in responses?
+how to use permission_required decorators on class-based views
+how to view logs of failed jobs with kubectl?
+how to view members of a subject with group kind
+how to view the permissions/roles associated with a specific service account?
+how to write a custom middleware class
+how to write a minimally working pyproject.toml file that can install packages?
+how to write a python module/package?
+how to write setup.py to include a git repository as a dependency
+importerror: libgl.so.1: cannot open shared object file: no such file or directory
+in a dockerfile, how to update the path environment variable?
+in a form, how do i make a field readonly (or disabled) so that it cannot be edited?
+in a model's custom save() method, how should you identify a new object?
+in a template, how to look up a dictionary value with a variable
+in pyproject.toml, can optional dependency groups require other optional dependency groups?
+in queries, when to use "id" vs "pk"?
+include possible httpexceptions in the openapi spec
+ingress configuration for services in different namespaces
+ingress vs load balancer
+install a module using pip for a specific python version
+install a specific git commit with pip
+install dependencies from pyproject.toml but not the package
+installing a specific package version with pip
+installing multiple versions of a package with pip
+installing pip packages to the $home folder
+installing python packages from a local file system folder to a virtualenv with pip
+interaction between pydantic models/schemas in the tutorial
+is it appropriate to store a database client in lifespan state
+is it possible to change the output alias in pydantic?
+is it possible to check for production or development mode
+is it possible to impose the length for a list attribute of the request body?
+is it possible to pass path arguments into dependency functions?
+is it possible to unmount a sub application
+is it possible to use it together with django?
+is it possible to use pip to install a package from a private github repository?
+is requirements.txt still needed when using pyproject.toml?
+is setup.cfg deprecated?
+is there a difference between running from the uvicorn command in a dockerfile and from a python file?
+is there a list of pytz timezones?
+is there a simple way to convert setup.py to pyproject.toml?
+is there a way to access current request data globally?
+is there a way to have a conditional requirements.txt file for my application based on platform?
+is there a way to share a configmap between namespaces?
+is there a way to share secrets across namespaces
+issue with cross-site cookies: how to set cookie from backend to frontend
+iterate a number in a for loop of a template
+keep getting "307 temporary redirect" before returning status 200
+kerberos authentication
+kubectl apply vs kubectl create
+kubectl error you must be logged in to the server (unauthorized) when accessing an eks cluster
+kubectl get events only for a pod
+kubectl logs - continuously
+kubectl run is deprecated - looking for an alternative
+kubectl run vs create and apply
+limiting query results
+listing all resources in a namespace
+liveness probe logging
+make every field optional with pydantic
+makemigrations - no changes detected
+manual workflow triggers in github actions
+media_url and media_root
+minikube vs kubernetes in docker for windows
+model() vs model.objects.create()
+modify a secret using kubectl?
+multiple commands in poststart hook of a container
+multiple environments such as staging, qa and production
+name is already in use by container
+namespace stuck as terminating, how do i remove it
+no matches for kind deployment in version extensions/v1beta1
+no module named mysqldb
+node(s) had volume node affinity conflict
+numeric for loop in templates
+numpy array is not json serializable
+onetoonefield() vs foreignkey()
+optional query parameters
+order_by queryset, ascending and descending
+persistent volume access modes: readwriteonce vs readonlymany vs readwritemany
+pg_config executable not found
+pip install fails with "connection error: [ssl: certificate_verify_failed] certificate verify failed"
+pip install from a git repo branch
+pip install from a local dir
+pip install mysql-python fails with environmenterror: mysql_config not found
+pip installs packages successfully, but executables are not found from the command line
+pip requirements.txt with an alternative index
+pod gets recreated when deleted
+pod has unbound persistentvolumeclaims
+pod in pending state due to insufficient cpu
+pod status as createcontainerconfigerror
+pods keep crashing with crashloopbackoff but i can't find any log
+pods stuck in terminating status
+port a middleware that uses the shutdown event to lifespan
+port forwarding gives connection refused
+protect the api docs behind authentication
+pydantic 2.0 ignores optional in schema and requires the field to be available
+pydantic enum field does not get converted to string
+python commands to build a distribution: setup.py build vs python -m build
+python packages and egg-info directories
+query parameters from pydantic model
+rapidoc integration
+reach a service located in another namespace
+recommended scalable websocket libraries for thousands of connections across servers
+redirection for trailing slash returns non-ssl link
+reference requirements.txt for the install_requires kwarg in a setuptools setup.py file
+requirements.txt depending on python version
+restart a container within a pod
+restart pods when a configmap updates
+retrieve url from view name (route name)
+retrieving parameters from a url
+return a file response with the output of a sql query
+returns "field required" and "value_error.missing" for one of my parameters, but the field is there
+right way to set up a python package with sub-packages
+rolling deployments and database migrations
+run an image as a container
+runtimewarning: datetimefield received a naive datetime
+scale down pods
+script to continuously follow kubectl get pods
+service cluster ip, how is this internally load balanced across different nodes
+service external ip stays pending
+set a different openapi schema name for automatically generated body names
+set default form values
+set description for query parameter in swagger doc using pydantic model
+setting debug = false causes a 500 error
+setup script exited with error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
+setup.py develop vs install
+sharing python objects across multiple workers
+should i be adding the migration files to the .gitignore file?
+should i use vagrant or docker for creating an isolated environment?
+size definitions: what's the difference between gi and g
+sort pods by age
+specify extras_require with pip install -e
+specifying test dependencies in pyproject.toml and getting them installed with pip install -e
+standard way to embed a version into a python package?
+stop docstrings being used as endpoint descriptions
+strategies for limiting upload file size
+streamingresponse is returning all the content at once
+streamingresponse not streaming with generator function
+tell when a job is complete
+test pydantic settings
+the term 'uvicorn' is not recognized as the name of a cmdlet, function, script file
+transactionmanagementerror "you can't execute queries until the end of the 'atomic' block" while using signals, but only during unit testing
+ubuntu container: bash: ping: command not found
+unable to copy data from pod to local using kubectl cp command
+unknown field "servicename" in io.k8s.api.networking.v1.ingressbackend when switching ingress from v1beta1 to v1
+update a configmap or secret without deleting the existing one
+use a db dependency without passing it through a function tree
+use an ml model loaded in the lifespan function from another file such as an api router
+use permission scopes at both router and endpoint level
+user "system:serviceaccount:default:default" cannot get services in the namespace
+using a dependency without having to pass it through a function tree
+using pip behind a proxy with cntlm
+using pytest with a src layer
+using the framework in a sync way, how can i get the raw body of a post request?
+validate the response with response_model while returning a response directly
+values_list vs values
+variable query parameters
+view log files of crashed pods
+what are the advantages of using depends over just calling a dependent function/class?
+what are the best practices for structuring a project?
+what do square brackets mean in pip install?
+what does <unset> mean in port in a service?
+what does depends with no parameter do?
+what does it mean for a service to be of type nodeport and have both port and targetport specified?
+what does kubernetes actually do?
+what does on_delete do on models?
+what is a "slug"?
+what is a headless service, what does it accomplish, and what are legitimate use cases
+what is an 'extra' in a pypi dependency?
+what is an endpoint
+what is related_name used for?
+what is reverse()?
+what is setup.py?
+what is the advantage of setting zip_safe to true when packaging a python project?
+what is the difference between "expose" and "publish"?
+what is the difference between a pod and a deployment
+what is the difference between always and on failure for restart policy?
+what is the difference between an image and a container?
+what is the difference between cmd and entrypoint in a dockerfile?
+what is the difference between extras_require and install_requires in setup.py?
+what is the difference between null=true and blank=true?
+what is the difference between patches and patchesjson6902 in kustomize?
+what is the difference between pip and conda?
+what is the difference between ports and expose in docker-compose?
+what is the difference between pyenv, virtualenv, and anaconda?
+what is the difference between render(), render_to_response() and direct_to_template()?
+what is the difference between subpath and mountpath
+what is the difference between the copy and add commands in a dockerfile?
+what is the difference between uvicorn and gunicorn+uvicorn?
+what is the effect of using `python -m pip` instead of just `pip`?
+what is the maximum size of upload file we can receive?
+what is the meaning of "failed building wheel for x" in pip install?
+what is the meaning of cpu and core?
+what is the meaning of imagepullbackoff status on a pod?
+what is the purpose of "pip install --user"?
+what is the purpose of the server dropdown on the docs page and how do i configure it
+what is the purpose of uvicorn?
+what is the pyproject.toml file for?
+what is the reverse of "kubectl apply"?
+what is the use case for `pip install -e`?
+what will happen to evicted pods
+what work does the process in the pause container do?
+what's the best way to extend the user model?
+what's the difference between charfield and textfield?
+what's the difference between deployment and replica set?
+what's the difference between docker compose and a dockerfile?
+what's the difference between select_related and prefetch_related in the orm?
+what's the difference between setup.py and setup.cfg in python projects
+what's the difference between the [tool.poetry] and [project] tables in pyproject.toml?
+what's the meaning of "ready=2/2" output by "kubectl get pod"
+what's the proper way to install pip, virtualenv, and distribute for python?
+what's the purpose of the secret_key setting?
+when saving a model, how can you check if a field has changed?
+when to use a pip requirements file versus install_requires in setup.py?
+when to use docker healthcheck vs livenessprobe / readinessprobe
+when to use secrets as opposed to configmaps?
+when would the -e, --editable option be useful with pip install?
+when/where to use body/path/query/field?
+where are images stored on the host machine?
+where can i find the error logs of nginx, using fastcgi?
+where does the convention of using /healthz for application health checks come from
+why #egg=foo when pip-installing from a git repo
+why can i not create a wheel in python?
+why did i get an error modulenotfounderror: no module named 'distutils'?
+why do i need 3 different kinds of probes: startupprobe, readinessprobe, livenessprobe
+why do we use yield to get sessionlocal with sqlalchemy?
+why does fastapi redirect a url with a trailing slash instead of resolving it
+why does the debug=false setting make my static files access fail?
+why statefulsets? can't a stateless pod use persistent volumes?
+why use pip over easy_install?
+{"detail":"method not allowed"}
