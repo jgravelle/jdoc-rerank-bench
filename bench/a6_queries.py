@@ -38,8 +38,12 @@ OUT_OF_SCOPE = re.compile(
     r"\b(heroku|vercel|netlify|aws|lambda|azure|gcp|nginx|apache|iis|docker|kubernetes|k8s|"
     r"vscode|vs code|visual studio|pycharm|jupyter|colab|conda|anaconda|"
     r"windows 1[01]|macos|os x|m1 mac|ubuntu \d|"
-    r"celery|redis|rabbitmq|mongodb|mysqldb|jenkins|github actions|"
-    r"react|vue|angular|next\.js|nuxt|youtube|openid|pylint)\b", re.I)
+    r"celery|redis|rabbitmq|mongo\w*|mysql\w*|postgres\w*|peewee|pypy|"
+    r"jenkins|github actions|keycloak|pytorch|tensorflow|facetime|"
+    r"react\w*|vue|angular\w*|next\.js|nuxt|youtube|openid|pylint|"
+    r"rest framework|drf|3[22][ -]?bit|64[ -]?bit)\b", re.I)
+# ⚠ `sqlalchemy` and `pydantic` are deliberately NOT here: FastAPI's own docs
+# cover both, so a question naming them is in scope for that corpus.
 POLICY = re.compile(
     r"\b(should i|should you|best practic|best way|best solution|recommended|recommend|"
     r"correct way|correctly|proper way|properly|right way|"

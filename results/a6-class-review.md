@@ -105,3 +105,65 @@ thing the class definitions exist to prevent.
 ⚠ The spent set is recomputed live from `queries/**` and `labels/**` on every
 fetch, so each batch also excludes the batches before it. `results/a6-spent-qids.txt`
 is the pre-batch1 snapshot (541) and is **not** the live set.
+
+
+---
+
+# Batch 3 added — 2026-09-20 (stratified)
+
+Pre-registered in `results/A6-sourcing-batch3.md` (`9549e08`), committed before the
+fetch. 52 rows kept from a phrase-filtered draw, then reviewed twice by hand.
+
+## Final histogram, all 408 drafts
+
+| | Q2 | Q3 | Q4 | Q5 | Q6 |
+|---|---|---|---|---|---|
+| after batch 1+2 | 31 | 178 | 37 | 15 | 59 |
+| **after batch 3 + review** | **31** | **180** | **58** | **58** | **81** |
+
+| corpus | Q2 | Q3 | Q4 | Q5 | Q6 |
+|---|---|---|---|---|---|
+| packaging | 12 | 36 | 13 | 12 | 29 |
+| pytest | 4 | 53 | 15 | 16 | 14 |
+| fastapi | 4 | 51 | 13 | 21 | 13 |
+| django | 11 | 40 | 17 | 9 | 25 |
+
+**Every floor is met**: Q4 58 and Q5 58 against 45 each (30 test + 15 dev), with
+13 of slack on both. 408 rows, 408 unique qids, no duplicate query text, no
+duplicate source question.
+
+## ⚠⚠ The stratified draw needed two review rounds, and the attrition is the point
+
+The phrase filter works: `title=` matching produced 1,462 django and 460 packaging
+candidates where top-voted-by-tag had produced almost no Q5. **But roughly a third
+of what it produced was not in scope**, and the first draw had to be discarded and
+re-drawn.
+
+What the phrase filter pulls in that a keyword list cannot anticipate:
+
+- **Third-party tools joined by "together" or "integrate":** tox, poetry, South,
+  Faust, Kafka, django-social-auth, Keycloak, ReactJS, pytorch, peewee,
+  BeautifulSoup, hypothesis, line_profiler. "Integrate X with Y" is precisely the
+  shape of a multi-concept question *and* of an out-of-corpus one.
+- **Environment questions wearing multi-concept clothes:** "both Python 2.7 and
+  3.6", "both x86_64 and arm64 on an M1", "both 32 bit and 64 bit".
+- **One outright junk row**: *"Merge 2 videos together like FaceTime"*, which
+  carried the `pip` tag and matched `title=together`.
+- **Single-concept rows the word "together" happens to name:** Django's
+  `unique_together` option is one concept, not two. Three rows demoted to Q3/Q2.
+
+⚠ `OUT_OF_SCOPE` was widened for the enumerable cases and **deliberately still
+excludes `sqlalchemy` and `pydantic`**, because FastAPI's own docs cover both — a
+question naming them is in scope for that corpus and out of scope for no one.
+
+⚠⚠ **A phrase that selects a class also selects a failure mode for that class.**
+"together" and "integrate" select multi-concept questions and out-of-corpus
+integration questions in roughly equal measure, so Q5 cannot be sourced this way
+without a per-row read. 132 hand overrides now sit in
+`queries/_draft/a6-class-review.json`; 16 of the last 408 rows changed on the
+final pass.
+
+## What was not done
+
+No Q3 was relabelled to Q4 or Q5. Q3's surplus is now 135 and remains unspent.
+The Q4 and Q5 strata are built entirely from rows that classify into them.
