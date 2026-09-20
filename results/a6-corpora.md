@@ -133,3 +133,75 @@ script; a reader cannot run it from a fresh clone.
 
 **Drafting is NOT started.** §12 item 4 (the draft-label provider/model pin) is
 still an open decision for J.
+
+## A6 draft labelling — pipeline proven, throughput blocked (2026-09-20)
+
+`bench/a6_draft.py`. Pinned model, `temperature=0`, `seed=0`,
+`response_format=json_object`, grades in `<qid>.labels.json` (exactly the keymap
+keys, which is what `collect` accepts) and one short note per passage in a
+`<qid>.notes.json` sidecar.
+
+⚠ A missing or out-of-range grade **raises**; it is not defaulted to 0. A silent 0
+is indistinguishable from a judged 0 and would bias every metric downward on
+precisely the passages the grader found hardest.
+
+### Route 1, `ollama` — PREFERRED, unreachable as configured
+
+The Mac Mini answers over Tailscale at 2–6 ms, so this is not a network problem:
+
+- Ollama's own port **11434 is closed**. Ollama binds `127.0.0.1` by default, so
+  it is not listening on the Tailscale interface.
+- Open WebUI **0.8.8** on `:8080` fronts it, and `/api/config` reports
+  `"auth": true` with **`"enable_api_keys": false`** — so `/ollama/api/tags`,
+  `/api/models` and `/openai/models` all answer `401 Not authenticated` and there
+  is no programmatic route in.
+
+Either fix unblocks it: `launchctl setenv OLLAMA_HOST 0.0.0.0` plus an Ollama
+restart, or switch API keys on in Open WebUI. ⚠ No Gemma tag could be confirmed,
+because listing models needs the auth that is unavailable.
+
+### Route 2, `openai` gpt-4o-mini — no credits
+
+`gpt-4o-mini-2024-07-18` returns HTTP 429 `credit_balance_exhausted`. Priced from
+developers.openai.com/api/docs/pricing on 2026-09-20 at **$0.15 / $0.60 per
+Mtok**, the full pass would be **≈ $0.34** (1.64M in, ~150k out).
+
+⚠ Fixed on the way past: a 429 was being retried five times with backoff, and
+`insufficient_quota` arrives as a 429 that no backoff can fix. Terminal 429s now
+fail fast.
+
+### Route 3, `groq` openai/gpt-oss-120b — works, throttled
+
+The pipeline is **proven end to end on this route**. One smoke task
+(`dj321939490`, "Unique together constraint including specific field value")
+graded 13 × 0, 1 × 1, 1 × 2, and the placement is right: **2** to
+`UniqueConstraint.condition` (the citable answer), **1** to the `UniqueConstraint`
+parent page (necessary, names `condition`, incomplete), **0** to the adjacent
+`fields` / `expressions` / `unique_together` attributes — the tightened rubric
+applied correctly, including its prefer-0 tiebreak.
+
+Then the free tier bites. Measured from the response headers: **8,000 TPM** on
+`gpt-oss-120b`, `gpt-oss-20b` and `qwen3.8-27b` alike (1,000 requests/day).
+Against the exported tasks:
+
+| | |
+|---|---|
+| tasks | 268 |
+| median task | 5,777 tokens |
+| p90 | 8,580 |
+| max | 12,408 |
+| **tasks that cannot fit one 8,000-TPM minute** | **79 (29%)** |
+| total | ~1.64M input tokens → **≥3.4 h** at 8,000 TPM |
+
+⚠ Also found here: Groq is behind Cloudflare, which answers urllib's default
+`Python-urllib/3.x` with **HTTP 403 code 1010**, a browser-signature block. The
+same request through curl passed, which is how the User-Agent was isolated.
+
+So Groq needs the 15-passage task split into chunks to fit the cap. **That is a
+change to the grading unit and is not being made unasked** — it repeats the rubric
+per chunk and removes cross-passage context, which is a deviation the memo would
+have to carry.
+
+**Drafting is NOT complete: 1 of 268 tasks drafted.** The rubric, the export, the
+blind-task shape and the grading pipeline are all verified; only throughput is
+unresolved.
