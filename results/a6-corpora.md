@@ -84,3 +84,52 @@ touching retrieval is a `_meta.tip` string on the lexical-no-embeddings path
 (`git diff 121a5a2..HEAD -- src/jdocmunch_mcp/tools/search_sections.py`: 7
 insertions, 1 deletion). Ranking and scoring are byte-identical, so A-hyb is the
 same arm; each pool header records the commit regardless.
+
+## A6 label tasks exported (§9 step 10, first half, 2026-09-20)
+
+§9 step 2 was still unticked and `bench/labeling.py` still carried the old
+grade-1 one-liner, so it was done first: `GUIDELINES_A6` is the tightened rubric
+from `results/RUBRIC-A6-grade1.md`. ⚠ `GUIDELINES` is **not** edited in place —
+A3's exports and labels were produced under it and a study's rubric is part of
+its record. Grades 0 and 2 are carried over verbatim; rewriting grade 2 toward
+Jev's `true` criterion is the shared-method bias A3 flagged.
+
+`export` gained `--arm` and `--depth`. ⚠⚠ Without them it exports **every**
+candidate, i.e. the union of both arms' top-20, which measures **23–35 per query
+here, not 20**. §4.3 freezes the judgment list as `rankings["A-hyb"][:15]`, so A6
+exports `--arm A-hyb --depth 15`: **4,020 pairs instead of ~7,700**, and no
+A-lex-only candidate is put in front of a labeler for a study whose baseline is
+A-hyb.
+
+| Task dir | Tasks | Pairs |
+|---|---|---|
+| `label_tasks/packaging-a6dev/` | 21 | 315 |
+| `label_tasks/pytest-a6dev/` | 42 | 630 |
+| `label_tasks/fastapi-a6dev/` | 12 | 180 |
+| `label_tasks/django-a6dev/` | 5 | 75 |
+| `label_tasks/packaging-a6test/` | 56 | 840 |
+| `label_tasks/pytest-a6test/` | 47 | 705 |
+| `label_tasks/fastapi-a6test/` | 46 | 690 |
+| `label_tasks/django-a6test/` | 39 | 585 |
+| **total** | **268** | **4,020** |
+
+6.25 MiB of prompt text, about 1.64M input tokens with one call per query.
+
+Smoke-tested before use: depth 15 equals A-hyb's top 15 as a set; the keyed set
+is shuffled per qid so `c01` is not the top-ranked passage (0 of 5 on the dev
+django tasks); the A6 grade-1 text reaches the task file and the old
+"partially useful" line does not; grade 2 is byte-identical; no arm name, rank or
+section id leaks into a blind task; and the default path still exports the full
+union under the old rubric.
+
+⚠ `label_tasks/` is gitignored (`.gitignore:7`) because tasks carry document
+text, so the exported tasks are machine-local and only the labels they produce
+get committed.
+
+⚠ Same applies to `runs/`, so **`runs/build_a6_pools.sh` is NOT in the
+repository** — matching `build_test2_pools.sh`, which is also ignored. The pool
+build settings are recorded in the section above so the procedure survives the
+script; a reader cannot run it from a fresh clone.
+
+**Drafting is NOT started.** §12 item 4 (the draft-label provider/model pin) is
+still an open decision for J.
