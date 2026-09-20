@@ -9,4 +9,3 @@ label_tasks/
 audit/
 .venv-fe/
 store-fe/
-corpora/pytest-src/
