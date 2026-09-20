@@ -6,6 +6,9 @@ rather than described:
   - top-voted questions for a tag (Stack Exchange API, CC BY-SA)
   - exclude any qid already in `queries/**` or `labels/**` (the spent set)
   - exclude near-duplicate text: token Jaccard >= 0.85 against any spent query
+  - exclude any row whose SOURCE question is already spent, whatever prefix it
+    was drawn under (see `spent`; this is the channel that actually identifies a
+    question, and it was added after the other two missed 95 rows)
   - provisional class from the TITLE ONLY
 
 ⚠⚠ `classify` is a keyword heuristic, not judgment. It exists so the draft is
@@ -89,8 +92,31 @@ def classify(title: str) -> str:
     return "Q3"
 
 
-def spent() -> tuple[set[str], list[set[str]]]:
-    qids, texts = set(), set()
+SOURCE_ID = re.compile(r"/q/(\d+)")
+
+
+def source_id(row: dict) -> str | None:
+    """The SOURCE question's own id, read from `source`. The identity that matters."""
+    m = SOURCE_ID.search(row.get("source") or "")
+    return m.group(1) if m else None
+
+
+def spent() -> tuple[set[str], list[set[str]], set[str]]:
+    """Spent qids, spent query-text token sets, and spent SOURCE question ids.
+
+    ⚠⚠ The third value exists because the first two do not identify a question.
+    Our qid is `<prefix><question_id>` and the prefix is chosen per batch, so the
+    SAME Stack Overflow question drawn under a new prefix is a NEW qid —
+    `dt8609192` and `dj68609192` are one question. The text channel does not close
+    the gap either: a frozen split's `query` is a HAND-CLEANED developer question
+    while a fresh draw carries the raw SO title, so two wordings of one question
+    routinely score under the 0.85 Jaccard bar.
+
+    **Measured 2026-09-20: 95 of 408 A6 drafts reused a question already frozen in
+    a prior split, and the text filter caught 2 of them.** Both prior channels
+    stay — they catch a re-drafted or reworded row this one cannot see.
+    """
+    qids, texts, sources = set(), set(), set()
     for p in list(ROOT.glob("queries/**/*.jsonl")) + list(ROOT.glob("labels/**/*.jsonl")):
         for line in p.read_text(encoding="utf-8").splitlines():
             if not line.strip():
@@ -100,7 +126,10 @@ def spent() -> tuple[set[str], list[set[str]]]:
                 qids.add(r["qid"])
             if r.get("query"):
                 texts.add(norm(r["query"]))
-    return qids, [toks(t) for t in texts]
+            sid = source_id(r)
+            if sid:
+                sources.add(sid)
+    return qids, [toks(t) for t in texts], sources
 
 
 def jaccard(a: set[str], b: set[str]) -> float:
@@ -160,8 +189,8 @@ def cmd_reclassify(a) -> int:
 
 
 def cmd_fetch(a) -> int:
-    sq, st = spent()
-    print(f"spent: {len(sq)} qids, {len(st)} texts")
+    sq, st, ss = spent()
+    print(f"spent: {len(sq)} qids, {len(st)} texts, {len(ss)} source questions")
     items = fetch(a.tag, a.pages)
     print(f"fetched {len(items)} questions for tag {a.tag}")
     rows, drop_qid, drop_dup, seen = [], 0, 0, set()
@@ -170,7 +199,7 @@ def cmd_fetch(a) -> int:
             break
         title = html.unescape(it["title"]).strip()
         qid = f"{a.prefix}{it['question_id']}"
-        if qid in sq or qid in seen:
+        if qid in sq or qid in seen or str(it["question_id"]) in ss:
             drop_qid += 1
             continue
         t = toks(norm(title))

@@ -65,8 +65,8 @@ def main(argv=None) -> int:
 
     targets = {k: int(v) for k, v in (p.split("=") for p in a.want.split(","))}
     keep_classes = list(targets)
-    sq, st = spent()
-    print(f"spent: {len(sq)} qids, {len(st)} texts")
+    sq, st, ss = spent()
+    print(f"spent: {len(sq)} qids, {len(st)} texts, {len(ss)} source questions")
 
     # Candidate cache: the phrase lists are frozen, so the raw draw is too.
     # Re-running to widen a per-class cap must not re-spend API quota.
@@ -102,7 +102,8 @@ def main(argv=None) -> int:
             if sum(k["class"] == want_class for k in kept) >= targets[want_class]:
                 break
             qid = f"{a.prefix}{it['question_id']}"
-            if qid in sq or any(k["qid"] == qid for k in kept):
+            if (qid in sq or str(it["question_id"]) in ss
+                    or any(k["qid"] == qid for k in kept)):
                 drop_qid += 1
                 continue
             title = html.unescape(it["title"]).strip()
