@@ -48,8 +48,14 @@ ROOT = Path(__file__).resolve().parent.parent
 PROVIDERS = {
     "ollama": {
         "endpoint": "http://gravelles-mac-mini.tail5b29f8.ts.net:11434/v1/chat/completions",
-        "key_env": None, "model": None,  # set --model to the exact `ollama list` tag
-        "price": (0.0, 0.0),
+        "key_env": None,
+        # Pinned by J. 2026-09-20. ⚠ `:latest` FLOATS — `ollama pull` re-points it
+        # and the labels would stop reproducing with nothing in the record moving.
+        # The digest below is what was actually served, and `--require-digest`
+        # refuses to draft against anything else.
+        "model": "gemma4:latest",
+        "digest": "c6eb396dbd5992bbe3f5cdb9",  # sha256 prefix, 8.0B, Q4_K_M
+        "price": (0.0, 0.0),  # local
     },
     "openai": {
         "endpoint": "https://api.openai.com/v1/chat/completions",
@@ -63,7 +69,7 @@ PROVIDERS = {
         "price": (0.0, 0.0),  # not priced here; see the memo
     },
 }
-PROVIDER = "groq"
+PROVIDER = "ollama"
 MODEL = PROVIDERS[PROVIDER]["model"]
 ENDPOINT = PROVIDERS[PROVIDER]["endpoint"]
 PRICE_IN, PRICE_OUT = PROVIDERS[PROVIDER]["price"]
@@ -87,14 +93,19 @@ distribution."""
 
 
 def call(task_text: str, retries: int = 5) -> tuple[dict, int, int]:
-    body = json.dumps({
+    payload = {
         "model": MODEL,
         "temperature": 0,
         "seed": 0,
         "response_format": {"type": "json_object"},
         "messages": [{"role": "system", "content": SYSTEM},
                      {"role": "user", "content": task_text}],
-    }).encode("utf-8")
+    }
+    if PROVIDER == "ollama":
+        # Hold the model in memory between tasks. Without it Ollama can unload
+        # between calls and pay the load cost 268 times.
+        payload["keep_alive"] = "30m"
+    body = json.dumps(payload).encode("utf-8")
     key_env = PROVIDERS[PROVIDER]["key_env"]
     key = os.environ.get(key_env) if key_env else None
     if key_env and not key:
@@ -112,7 +123,10 @@ def call(task_text: str, retries: int = 5) -> tuple[dict, int, int]:
             headers["Authorization"] = f"Bearer {key}"
         req = urllib.request.Request(ENDPOINT, data=body, headers=headers)
         try:
-            with urllib.request.urlopen(req, timeout=180) as r:
+            # ⚠ 900 s, not 180. The largest task is 12,408 tokens and an 8B model
+            # on the Mac Mini needs minutes for it; 180 s killed the first full run
+            # after five pointless retries of a request that was simply slow.
+            with urllib.request.urlopen(req, timeout=900) as r:
                 d = json.loads(r.read().decode("utf-8"))
             u = d.get("usage", {})
             return (json.loads(d["choices"][0]["message"]["content"]),
@@ -136,37 +150,94 @@ def call(task_text: str, retries: int = 5) -> tuple[dict, int, int]:
     raise SystemExit(f"gave up after {retries}: {last}")
 
 
+def verify_digest() -> str:
+    """Confirm the tag still resolves to the digest these labels were drafted at.
+
+    ⚠⚠ `gemma4:latest` is a MOVING tag. A re-pull would change the grader without
+    changing one character of the record, and the labels are the confirmatory
+    study's ground truth. This is the same failure mode as a floating API alias,
+    and it is why the digest is pinned rather than the tag alone.
+    """
+    want = PROVIDERS[PROVIDER].get("digest")
+    if not want:
+        return ""
+    host = ENDPOINT.split("/v1/")[0]
+    with urllib.request.urlopen(f"{host}/api/tags", timeout=30) as r:
+        tags = json.loads(r.read().decode("utf-8"))
+    got = {m["name"]: m.get("digest", "") for m in tags.get("models", [])}
+    have = got.get(MODEL, "")
+    if not have.startswith(want):
+        raise SystemExit(
+            f"{MODEL} now resolves to digest {have[:24]!r}, pinned {want!r}. "
+            "The grader changed; do not mix labels across digests.")
+    return have
+
+
 def draft_dir(d: Path, limit: int = 0, force: bool = False) -> dict:
     keymap = json.loads((d / "keymap.json").read_text(encoding="utf-8"))
     qids = list(keymap)
     if limit:
         qids = qids[:limit]
     hist, tok_in, tok_out, done, skipped = collections.Counter(), 0, 0, 0, 0
+    failed: list[str] = []
     for qid in qids:
         dest = d / f"{qid}.labels.json"
         if dest.exists() and not force:
+            # ⚠⚠ Reuse is only safe if the SAME grader produced it. A resumed run
+            # that silently keeps another model's labels yields one label set with
+            # two graders in it, which no later audit could separate — the Groq
+            # smoke task was exactly this case.
+            side = d / f"{qid}.notes.json"
+            prev = (json.loads(side.read_text(encoding="utf-8")).get("_model")
+                    if side.exists() else None)
+            if prev != MODEL:
+                raise SystemExit(
+                    f"{qid}: already drafted by {prev!r}, now running {MODEL!r}. "
+                    "Delete that dir's .labels.json/.notes.json and redraft; "
+                    "never mix graders in one label set.")
             skipped += 1
             hist.update(json.loads(dest.read_text(encoding="utf-8")).values())
             continue
         task = (d / f"{qid}.md").read_text(encoding="utf-8")
-        out, ti, to = call(task)
-        tok_in += ti
-        tok_out += to
-        got = out.get("grades", out)
-        grades, notes = {}, {}
-        for k in keymap[qid]:
-            cell = got.get(k)
-            if isinstance(cell, dict):
-                g, n = cell.get("g"), cell.get("n", "")
-            else:
-                g, n = cell, ""
-            if g not in (0, 1, 2):
-                # ⚠ A missing or out-of-range grade is NOT defaulted to 0. A
-                # silent 0 is indistinguishable from a judged 0 and would bias
-                # every metric downward on exactly the passages the model found
-                # hardest. It fails loudly instead.
-                raise SystemExit(f"{qid}/{k}: grade {g!r} is not 0, 1 or 2")
-            grades[k], notes[k] = int(g), str(n)[:200]
+        # ⚠ A local 8B model occasionally drops a key or emits a non-integer
+        # grade. RE-ASK on a malformed reply — up to 3 times — rather than
+        # defaulting the missing grade. ⚠⚠ Re-asking is not the same as
+        # softening: a grade is never inferred, and after 3 attempts it still
+        # fails loudly, because a silent 0 is indistinguishable from a judged 0
+        # and would bias every metric downward on the hardest passages.
+        for attempt in range(3):
+            try:
+                out, ti, to = call(task)
+            except SystemExit as e:
+                # ⚠⚠ One slow or malformed task must not end a 268-task run. It is
+                # RECORDED and skipped, never faked: no label file is written, so
+                # `labeling collect` reports it as missing and the gap is loud.
+                # This is the opposite of defaulting a grade to 0.
+                print(f"    FAILED {qid}: {e}", flush=True)
+                failed.append(qid)
+                break
+            tok_in += ti
+            tok_out += to
+            got = out.get("grades", out)
+            grades, notes, bad = {}, {}, None
+            for k in keymap[qid]:
+                cell = got.get(k)
+                if isinstance(cell, dict):
+                    g, n = cell.get("g"), cell.get("n", "")
+                else:
+                    g, n = cell, ""
+                if g not in (0, 1, 2):
+                    bad = f"{qid}/{k}: grade {g!r} is not 0, 1 or 2"
+                    break
+                grades[k], notes[k] = int(g), str(n)[:200]
+            if not bad:
+                break
+            print(f"    retry {attempt + 1}/3 — {bad}", flush=True)
+        else:
+            print(f"    FAILED {qid}: {bad}", flush=True)
+            failed.append(qid)
+        if qid in failed:
+            continue
         dest.write_text(json.dumps(grades), encoding="utf-8")
         (d / f"{qid}.notes.json").write_text(
             json.dumps({"_model": MODEL, "_temperature": 0, "notes": notes}), encoding="utf-8")
@@ -174,7 +245,7 @@ def draft_dir(d: Path, limit: int = 0, force: bool = False) -> dict:
         done += 1
         print(f"  {qid}: {dict(sorted(collections.Counter(grades.values()).items()))}", flush=True)
     return {"dir": d.name, "drafted": done, "reused": skipped, "hist": hist,
-            "tok_in": tok_in, "tok_out": tok_out}
+            "tok_in": tok_in, "tok_out": tok_out, "failed": failed}
 
 
 def main(argv=None) -> int:
@@ -199,13 +270,17 @@ def main(argv=None) -> int:
             [Path(p) for p in sorted(glob.glob(str(ROOT / "label_tasks" / "*-a6*")))])
     if not dirs:
         raise SystemExit("no task dirs")
-    print(f"model {MODEL} | temperature 0 | {len(dirs)} dir(s)")
-    total, ti, to = collections.Counter(), 0, 0
+    digest = verify_digest()
+    print(f"provider {PROVIDER} | endpoint {ENDPOINT}")
+    print(f"model {MODEL}" + (f" | digest {digest[:24]}" if digest else "")
+          + f" | temperature 0 | {len(dirs)} dir(s)")
+    total, ti, to, all_failed = collections.Counter(), 0, 0, []
     for d in dirs:
         r = draft_dir(d, a.limit, a.force)
         total.update(r["hist"])
         ti += r["tok_in"]
         to += r["tok_out"]
+        all_failed += r["failed"]
         n = sum(r["hist"].values())
         print(f"{r['dir']}: drafted {r['drafted']}, reused {r['reused']} | "
               f"grades {dict(sorted(r['hist'].items()))}"
@@ -217,6 +292,10 @@ def main(argv=None) -> int:
             print(f"  grade {g}: {total[g]:5d}  {total[g] / n:6.1%}")
     cost = ti / 1e6 * PRICE_IN + to / 1e6 * PRICE_OUT
     print(f"tokens in {ti} out {to} | cost ${cost:.4f} at ${PRICE_IN}/${PRICE_OUT} per Mtok")
+    if all_failed:
+        print(f"\n{len(all_failed)} task(s) FAILED and have no label file: {all_failed}")
+        print("Re-run to retry them; `labeling collect` will report them missing.")
+        return 1
     return 0
 
 
