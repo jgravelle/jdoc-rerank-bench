@@ -165,6 +165,7 @@ def agree(name: str) -> None:
     # ⚠ Grade 1 is REPORTED, never a hard kill on its own -- but under 50% exact
     # agreement after the tightened rubric is a STOP, because the rubric is then
     # the thing that failed, not the labels.
+    g1_stop = False
     sub = by_llm[1]
     if sub:
         c = Counter(sub)
@@ -172,6 +173,7 @@ def agree(name: str) -> None:
         print(f"grade 1 (reported, not a gate): exact {exact:.1%} of n={len(sub)}  "
               f"confusion 0 vs {{1,2}} = {c[0]} vs {c[1] + c[2]}")
         if exact < 0.50:
+            g1_stop = True
             print("⚠⚠ STOP: grade-1 exact agreement under 50% after the tightened "
                   "rubric. Revise the rubric and relabel before scoring anything.")
     rel = [(l >= 1, h >= 1) for l, h in pairs]
@@ -179,12 +181,43 @@ def agree(name: str) -> None:
         print(f"binary (useful at all) agreement within sample: "
               f"{sum(a == b for a, b in rel) / len(rel):.0%}")
     print()
-    print("SECTION 3: " + ("PASS — A6 labels are evidence." if all(verdicts)
-                           else "FAIL — fix guidelines, relabel, re-audit. "
-                                "A6 labels are NOT evidence until the gates pass."))
+    # ⚠⚠ "No data" is NOT a FAIL, and printing one for the other is the defect
+    # class this repo already named: a signal that always fires hides the case it
+    # exists for. An unfilled sheet reads as the labels having failed an audit
+    # nobody has performed, which is the one reading that could get them thrown
+    # out on no evidence at all.
+    if not pairs:
+        print("SECTION 3: NOT AUDITED — no item graded yet. This is not a "
+              "verdict on the labels.")
+    elif g1_stop:
+        # ⚠⚠ Both gates can PASS while grade 1 is noise -- measured on a synthetic
+        # sheet that called every grade-1 item 0: gates 100%/100%, grade-1 exact
+        # 0%. Section 7 makes that a STOP before scoring, so the summary must not
+        # print PASS underneath its own stop warning.
+        print("SECTION 3: STOP — both gates pass, but grade-1 exact agreement is "
+              "under 50%. Revise the rubric and relabel before scoring.")
+    elif not all(verdicts):
+        print("SECTION 3: FAIL — fix guidelines, relabel, re-audit. "
+              "A6 labels are NOT evidence until the gates pass.")
+    elif len(pairs) < len(key):
+        print(f"SECTION 3: gates pass on the {len(pairs)} graded items, but "
+              f"{len(key) - len(pairs)} are unfilled. NOT a pass — finish the "
+              "sheet, because the skipped items bias the gate they belonged to.")
+    else:
+        print("SECTION 3: PASS — A6 labels are evidence.")
 
 
 def main(argv=None) -> int:
+    # ⚠⚠ Force UTF-8 stdio. On Windows `sys.stdout` is the CONSOLE stream on a
+    # terminal and the LOCALE stream (cp1252) when PIPED, so this module printed
+    # its verdict by hand and died with UnicodeEncodeError the moment anyone
+    # redirected it to a file -- which is exactly how an auditor keeps a record.
+    # Measured 2026-09-21: `agree` traced back on the first ⚠ it tried to print.
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8")
+        except (AttributeError, ValueError):  # not a reconfigurable text stream
+            pass
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["sample", "agree"])
     ap.add_argument("--corpora", default="fastapi,k8s")
