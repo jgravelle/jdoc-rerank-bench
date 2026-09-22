@@ -92,9 +92,13 @@ Every key present in the message must appear exactly once. `g` is the integer 0,
 distribution."""
 
 
-def call(task_text: str, retries: int = 5) -> tuple[dict, int, int]:
+def call(task_text: str, retries: int = 5, model: str | None = None) -> tuple[dict, int, int]:
+    # ⚠ `model` exists so a CANDIDATE grader can be validated against the human
+    # grades without touching the drafting default. It never changes what a
+    # drafting run uses, and the grader-mixing guard in draft_dir still keys on
+    # MODEL, so a validation run cannot leak a second grader into a label set.
     payload = {
-        "model": MODEL,
+        "model": model or MODEL,
         "temperature": 0,
         "seed": 0,
         "response_format": {"type": "json_object"},
