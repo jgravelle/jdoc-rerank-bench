@@ -92,7 +92,8 @@ Every key present in the message must appear exactly once. `g` is the integer 0,
 distribution."""
 
 
-def call(task_text: str, retries: int = 5, model: str | None = None) -> tuple[dict, int, int]:
+def call(task_text: str, retries: int = 5, model: str | None = None,
+         timeout: int = 900) -> tuple[dict, int, int]:
     # ⚠ `model` exists so a CANDIDATE grader can be validated against the human
     # grades without touching the drafting default. It never changes what a
     # drafting run uses, and the grader-mixing guard in draft_dir still keys on
@@ -130,7 +131,7 @@ def call(task_text: str, retries: int = 5, model: str | None = None) -> tuple[di
             # ⚠ 900 s, not 180. The largest task is 12,408 tokens and an 8B model
             # on the Mac Mini needs minutes for it; 180 s killed the first full run
             # after five pointless retries of a request that was simply slow.
-            with urllib.request.urlopen(req, timeout=900) as r:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
                 d = json.loads(r.read().decode("utf-8"))
             u = d.get("usage", {})
             return (json.loads(d["choices"][0]["message"]["content"]),

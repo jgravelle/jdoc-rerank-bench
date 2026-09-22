@@ -35,6 +35,14 @@ from .a6_draft import PROVIDERS
 
 ROOT = Path(__file__).resolve().parent.parent
 PACK = "audit-a6-2026-09-20"
+# ⚠⚠ 180s, not the drafting default of 900s x 5 retries. A validation call grades
+# ONE passage, or one already-written task; it is never legitimately slow. On
+# 2026-09-22 a run sat 100 MINUTES with no output because another workload held
+# the Ollama host and would not yield an 18 GB resident model, and every blocked
+# call climbed the drafting ladder in silence. **A budget sized for the slowest
+# legitimate request cannot detect a blocked one.**
+CALL_TIMEOUT = 180
+
 GATES = ((0, "human said 0", 0.90, lambda h: h == 0),
          (2, "human said 1 or 2", 0.80, lambda h: h >= 1))
 
@@ -82,7 +90,8 @@ def run(model: str, mode: str, limit: int = 0) -> None:
         try:
             if mode == "batch":
                 # Production shape: every sibling visible in one prompt.
-                out, _, _ = draft_call((d / f"{qid}.md").read_text(encoding="utf-8"), model=model)
+                out, _, _ = draft_call((d / f"{qid}.md").read_text(encoding="utf-8"),
+                                       model=model, retries=2, timeout=CALL_TIMEOUT)
                 got = out.get("grades", out)
                 for k, sec in need.items():
                     cell = got.get(k)
@@ -96,7 +105,8 @@ def run(model: str, mode: str, limit: int = 0) -> None:
                 # model cannot infer a position, and no sibling is present.
                 for k, sec in need.items():
                     prompt = f"{head}\n\n# Passages\n\n## c01\n\n{blocks[k]}\n"
-                    out, _, _ = draft_call(prompt, model=model)
+                    out, _, _ = draft_call(prompt, model=model, retries=2,
+                                           timeout=CALL_TIMEOUT)
                     got = out.get("grades", out)
                     cell = got.get("c01", got.get(k))
                     v = cell.get("g") if isinstance(cell, dict) else cell
