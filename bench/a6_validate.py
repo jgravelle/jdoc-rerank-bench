@@ -43,6 +43,31 @@ PACK = "audit-a6-2026-09-20"
 # legitimate request cannot detect a blocked one.**
 CALL_TIMEOUT = 180
 
+
+def _ckpt_path(model: str, mode: str) -> Path:
+    """One checkpoint per (model, mode), so two candidates never share a file."""
+    safe = model.replace(":", "-").replace("/", "-")
+    d = ROOT / "validate"
+    d.mkdir(exist_ok=True)
+    return d / f"{safe}.{mode}.jsonl"
+
+
+def _load_ckpt(path: Path) -> dict[tuple[str, str, str], int]:
+    # ⚠⚠ Predictions were held in MEMORY only, so closing the laptop threw away
+    # every call already paid for -- 3.2 hours of a grader's time to a lid.
+    # Appended as they arrive, one JSON object per line: a half-written final line
+    # is skipped rather than poisoning a resume.
+    out = {}
+    if not path.exists():
+        return out
+    for line in path.read_text(encoding="utf-8").splitlines():
+        try:
+            r = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        out[(r["corpus"], r["qid"], r["section_id"])] = int(r["grade"])
+    return out
+
 GATES = ((0, "human said 0", 0.90, lambda h: h == 0),
          (2, "human said 1 or 2", 0.80, lambda h: h >= 1))
 
@@ -80,13 +105,27 @@ def run(model: str, mode: str, limit: int = 0) -> None:
     print(f"grader {model!r} | mode {mode} | {len(tasks)} queries "
           f"covering {sum(len(want[t]) for t in tasks)} audited passages")
 
-    pred: dict[tuple[str, str, str], int] = {}
+    ck = _ckpt_path(model, mode)
+    pred: dict[tuple[str, str, str], int] = _load_ckpt(ck)
+    if pred:
+        print(f"resuming from {ck.name}: {len(pred)} passages already graded")
+    fh_ck = ck.open("a", encoding="utf-8")
+
+    def record(corpus: str, qid: str, sec: str, v: int) -> None:
+        pred[(corpus, qid, sec)] = v
+        fh_ck.write(json.dumps({"corpus": corpus, "qid": qid,
+                                "section_id": sec, "grade": v}) + "\n")
+        fh_ck.flush()
+
     bad = 0
     for n, (corpus, qid) in enumerate(tasks, 1):
         d = ROOT / "label_tasks" / corpus
         keymap = json.loads((d / "keymap.json").read_text(encoding="utf-8"))[qid]
         head, blocks = _task_parts((d / f"{qid}.md").read_text(encoding="utf-8"))
-        need = {k: s for k, s in keymap.items() if s in want[(corpus, qid)]}
+        need = {k: s for k, s in keymap.items()
+                if s in want[(corpus, qid)] and (corpus, qid, s) not in pred}
+        if not need:
+            continue
         try:
             if mode == "batch":
                 # Production shape: every sibling visible in one prompt.
@@ -97,7 +136,7 @@ def run(model: str, mode: str, limit: int = 0) -> None:
                     cell = got.get(k)
                     v = cell.get("g") if isinstance(cell, dict) else cell
                     if v in (0, 1, 2):
-                        pred[(corpus, qid, sec)] = int(v)
+                        record(corpus, qid, sec, int(v))
                     else:
                         bad += 1
             else:
@@ -111,7 +150,7 @@ def run(model: str, mode: str, limit: int = 0) -> None:
                     cell = got.get("c01", got.get(k))
                     v = cell.get("g") if isinstance(cell, dict) else cell
                     if v in (0, 1, 2):
-                        pred[(corpus, qid, sec)] = int(v)
+                        record(corpus, qid, sec, int(v))
                     else:
                         bad += 1
         except SystemExit as e:
@@ -120,7 +159,8 @@ def run(model: str, mode: str, limit: int = 0) -> None:
         if n % 20 == 0:
             print(f"  {n}/{len(tasks)} queries, {len(pred)} graded", flush=True)
 
-    pairs = [(pred[k], g[k]) for k in pred]
+    fh_ck.close()
+    pairs = [(pred[k], g[k]) for k in pred if k in g]
     print(f"\n{len(pairs)} of {sum(len(want[t]) for t in tasks)} passages graded"
           f"{f'; {bad} unusable' if bad else ''}")
     if not pairs:
