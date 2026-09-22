@@ -219,7 +219,9 @@ def main(argv=None) -> int:
         except (AttributeError, ValueError):  # not a reconfigurable text stream
             pass
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["sample", "agree"])
+    ap.add_argument("cmd", choices=["sample", "agree", "review"])
+    ap.add_argument("--start", default="", help="resume at this item id")
+    ap.add_argument("--limit", type=int, default=0, help="items to queue this sitting")
     ap.add_argument("--corpora", default="fastapi,k8s")
     ap.add_argument("--per-corpus", type=int, default=100)
     ap.add_argument("--seed", type=int, default=0)
@@ -232,8 +234,11 @@ def main(argv=None) -> int:
     if a.cmd == "sample":
         sample(a.corpora.split(","), a.per_corpus, a.seed, a.name,
                a.rubric, a.grade1_extra)
-    else:
+    elif a.cmd == "agree":
         agree(a.name)
+    else:
+        from .audit_review import review
+        review(a.name, a.start, a.limit)
     return 0
 
 
