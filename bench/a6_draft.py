@@ -205,9 +205,27 @@ def draft_dir(d: Path, limit: int = 0, force: bool = False) -> dict:
         # softening: a grade is never inferred, and after 3 attempts it still
         # fails loudly, because a silent 0 is indistinguishable from a judged 0
         # and would bias every metric downward on the hardest passages.
+        # ⚠⚠ THE RE-ASK NAMES THE MISSING KEYS, and that is the whole point.
+        # At temperature 0 with a fixed seed the model is deterministic, so
+        # re-sending the identical prompt returns the identical malformed reply.
+        # Measured on the 2026-09-21 full pass: three tasks spent all three
+        # attempts on byte-identical failures, every one of them on the LAST
+        # candidate. Changing the ask is what makes a retry a retry.
+        # ⚠ Valid cells ACCUMULATE across attempts, so a second ask only has to
+        # produce the keys still missing — never a whole task over again.
+        grades: dict[str, int] = {}
+        notes: dict[str, str] = {}
+        bad = None
         for attempt in range(3):
+            need = [k for k in keymap[qid] if k not in grades]
+            ask = task if attempt == 0 else (
+                task + "\n\n---\nYour previous reply did not grade every "
+                "passage. Reply with a JSON object whose keys are EXACTLY "
+                + ", ".join(need) + " and nothing else. Each value is "
+                '{"g": 0|1|2, "n": "<one short sentence>"}. '
+                "The grade must be the integer 0, 1 or 2.")
             try:
-                out, ti, to = call(task)
+                out, ti, to = call(ask)
             except SystemExit as e:
                 # ⚠⚠ One slow or malformed task must not end a 268-task run. It is
                 # RECORDED and skipped, never faked: no label file is written, so
@@ -219,16 +237,19 @@ def draft_dir(d: Path, limit: int = 0, force: bool = False) -> dict:
             tok_in += ti
             tok_out += to
             got = out.get("grades", out)
-            grades, notes, bad = {}, {}, None
-            for k in keymap[qid]:
+            bad = None
+            for k in need:
                 cell = got.get(k)
                 if isinstance(cell, dict):
                     g, n = cell.get("g"), cell.get("n", "")
                 else:
                     g, n = cell, ""
                 if g not in (0, 1, 2):
-                    bad = f"{qid}/{k}: grade {g!r} is not 0, 1 or 2"
-                    break
+                    # ⚠ Record the first bad key and KEEP GOING: a reply that
+                    # drops one cell still carries good grades for the rest.
+                    if bad is None:
+                        bad = f"{qid}/{k}: grade {g!r} is not 0, 1 or 2"
+                    continue
                 grades[k], notes[k] = int(g), str(n)[:200]
             if not bad:
                 break
@@ -238,7 +259,8 @@ def draft_dir(d: Path, limit: int = 0, force: bool = False) -> dict:
             failed.append(qid)
         if qid in failed:
             continue
-        dest.write_text(json.dumps(grades), encoding="utf-8")
+        dest.write_text(json.dumps({k: grades[k] for k in keymap[qid]}),
+                        encoding="utf-8")
         (d / f"{qid}.notes.json").write_text(
             json.dumps({"_model": MODEL, "_temperature": 0, "notes": notes}), encoding="utf-8")
         hist.update(grades.values())
