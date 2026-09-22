@@ -62,3 +62,71 @@ reader to derive it.
 Partial sheets are accepted and reported as `INCOMPLETE`: the strata are quota'd,
 so skipped items bias whichever gate they belonged to, and a subset verdict says
 so rather than reading as a pass.
+
+---
+
+# A6 dev audit pack — audit-a6dev-2026-09-21
+
+Added 2026-09-21 on request, after the test pack. ⚠⚠ **This one is NOT
+pre-registered.** Section 7 specifies a single audit and I read its scope as the
+test split, because section 3 decides whether the labels are *evidence* and dev
+exists to tune against. Dev is audited because it was asked for, and it carries
+its own name and date so nobody later reads it as the registered pass.
+
+```
+python -m bench.audit sample \
+  --corpora django-a6dev,fastapi-a6dev,packaging-a6dev,pytest-a6dev \
+  --per-corpus 40 --seed 0 --grade1-extra 40 --rubric a6 \
+  --name audit-a6dev-2026-09-21
+```
+
+**200 items — 160 quota + 40 grade-1 oversample.** 37,779 words.
+
+| corpus | 0 | 1 | 2 | total |
+|---|---|---|---|---|
+| django-a6dev | 20 | 6 | 14 | 40 |
+| fastapi-a6dev | 13 | 19 | 13 | 45 |
+| packaging-a6dev | 12 | 26 | 14 | 52 |
+| pytest-a6dev | 12 | 37 | 14 | 63 |
+
+## ⚠⚠ Why `--per-corpus` is 40 here and 100 there
+
+**Dev cannot support the registered size, and forcing it would have produced a
+grade-0 pack wearing a stratified label.** Measured:
+
+| corpus | pairs | g0 | g1 | g2 |
+|---|---|---|---|---|
+| django-a6dev | 75 | 55 | 6 | 14 |
+| fastapi-a6dev | 180 | 148 | 19 | 13 |
+| packaging-a6dev | 315 | 265 | 26 | 24 |
+| pytest-a6dev | 630 | 492 | 71 | 67 |
+| **dev total** | **1200** | **960** | **122** | **118** |
+
+At `--per-corpus 100` the quota wants 35 grade-2 and 35 grade-1 from each. Three
+of the four corpora cannot fill either, the allocator sends every shortfall to
+grade 0, and the result is ~400 items dominated by grade 0 with all 240 non-zero
+dev labels drained. 40 keeps the pack at **200 of 1200 (16.7%)**, against the
+test pack's 440 of 2820 (15.6%) -- the same sampling rate, not a shrunken one.
+
+## ⚠⚠ Five strata are a CENSUS, not a sample
+
+| | |
+|---|---|
+| django-a6dev grade 1 | all 6 |
+| django-a6dev grade 2 | all 14 |
+| fastapi-a6dev grade 1 | all 19 |
+| fastapi-a6dev grade 2 | all 13 |
+| packaging-a6dev grade 1 | all 26 |
+
+Two consequences, pulling opposite ways, and both belong in any write-up:
+
+**The agreement rate for those strata is exact, not an estimate.** There is no
+unsampled remainder for it to generalise to.
+
+**⚠⚠ And there is no holdout, so "relabel and re-audit" turns circular.** The
+section-7 fail action assumes unseen items exist to re-draw. For these five
+strata a re-audit would re-judge the items already judged, which measures the
+auditor's consistency and not the new labels. If a dev gate fails, the honest
+remedy is a fresh dev draw, not a second pass over the same rows.
+
+⚠ django-a6dev's grade-1 stratum is **6 items**. No gate should be quoted off it.
