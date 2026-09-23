@@ -23,8 +23,10 @@ old labels are the thing under suspicion.
 from __future__ import annotations
 
 import argparse
+import atexit
 import csv
 import json
+import os
 import re
 import sys
 from collections import Counter
@@ -109,6 +111,22 @@ def run(model: str, mode: str, limit: int = 0) -> None:
     pred: dict[tuple[str, str, str], int] = _load_ckpt(ck)
     if pred:
         print(f"resuming from {ck.name}: {len(pred)} passages already graded")
+    # ⚠⚠ A LOCK, because "resumable" invites exactly one process too many. On
+    # 2026-09-22 two copies of this run appended to the same checkpoint: each
+    # loaded the same 119 predictions, each skipped the same items, and both
+    # graded the rest. 231 lines held 191 distinct passages. The duplicates were
+    # harmless -- they collapse on load, and temperature 0 gives the same grade --
+    # but ~40 passages were paid for twice on a host where a call costs 30-150s.
+    lock = ck.with_suffix(".lock")
+    try:
+        fd = os.open(str(lock), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        raise SystemExit(
+            f"{lock.name} exists: another run is already grading {model} in {mode} "
+            f"mode. If no process is running, delete it and start again.")
+    os.write(fd, str(os.getpid()).encode())
+    os.close(fd)
+    atexit.register(lambda: lock.unlink(missing_ok=True))
     fh_ck = ck.open("a", encoding="utf-8")
 
     def record(corpus: str, qid: str, sec: str, v: int) -> None:
