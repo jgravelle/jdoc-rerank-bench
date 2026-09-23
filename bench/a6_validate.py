@@ -32,6 +32,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+from . import a6_draft
 from .a6_draft import call as draft_call
 from .a6_draft import PROVIDERS
 
@@ -48,6 +49,9 @@ PACK = "audit-a6-2026-09-20"
 # out. **A timeout that fails the big cases biases the sample rather than just
 # slowing it.**
 CALL_TIMEOUT = {"single": 180, "batch": 1200}
+# ⚠ A rate-limited provider consumes attempts WAITING, not failing, so a
+# budget of 2 that suffices for a local host starves on a hosted one.
+RETRIES = int(os.environ.get("A6_VALIDATE_RETRIES", "4"))
 
 
 def _ckpt_path(model: str, mode: str) -> Path:
@@ -100,6 +104,20 @@ def _task_parts(md: str) -> tuple[str, dict[str, str]]:
     return head.rstrip(), blocks
 
 
+def select_provider(name: str) -> None:
+    """Point the shared `call()` at another provider for this process only.
+
+    ⚠ `call()` reads a module-level ENDPOINT and key_env, so a candidate on a
+    different host needs those rebound. Nothing is written back to disk and the
+    drafting default is unaffected; the checkpoint filename carries the model, so
+    two providers can never share one.
+    """
+    if name not in PROVIDERS:
+        raise SystemExit(f"unknown provider {name!r}; have {sorted(PROVIDERS)}")
+    a6_draft.PROVIDER = name
+    a6_draft.ENDPOINT = PROVIDERS[name]["endpoint"]
+
+
 def run(model: str, mode: str, limit: int = 0) -> None:
     g = gold()
     want: dict[tuple[str, str], set[str]] = {}
@@ -108,7 +126,7 @@ def run(model: str, mode: str, limit: int = 0) -> None:
     tasks = sorted(want)
     if limit:
         tasks = tasks[:limit]
-    print(f"grader {model!r} | mode {mode} | {len(tasks)} queries "
+    print(f"grader {model!r} @ {a6_draft.PROVIDER} | mode {mode} | {len(tasks)} queries "
           f"covering {sum(len(want[t]) for t in tasks)} audited passages")
 
     ck = _ckpt_path(model, mode)
@@ -152,7 +170,7 @@ def run(model: str, mode: str, limit: int = 0) -> None:
             if mode == "batch":
                 # Production shape: every sibling visible in one prompt.
                 out, _, _ = draft_call((d / f"{qid}.md").read_text(encoding="utf-8"),
-                                       model=model, retries=2, timeout=CALL_TIMEOUT[mode])
+                                       model=model, retries=RETRIES, timeout=CALL_TIMEOUT[mode])
                 got = out.get("grades", out)
                 for k, sec in need.items():
                     cell = got.get(k)
@@ -166,7 +184,7 @@ def run(model: str, mode: str, limit: int = 0) -> None:
                 # model cannot infer a position, and no sibling is present.
                 for k, sec in need.items():
                     prompt = f"{head}\n\n# Passages\n\n## c01\n\n{blocks[k]}\n"
-                    out, _, _ = draft_call(prompt, model=model, retries=2,
+                    out, _, _ = draft_call(prompt, model=model, retries=RETRIES,
                                            timeout=CALL_TIMEOUT[mode])
                     got = out.get("grades", out)
                     cell = got.get("c01", got.get(k))
@@ -233,8 +251,10 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True, help="ollama tag, e.g. gemma4:26b")
     ap.add_argument("--mode", choices=["batch", "single"], default="batch")
+    ap.add_argument("--provider", default="ollama", help="ollama, groq, openai")
     ap.add_argument("--limit", type=int, default=0, help="queries, for a smoke run")
     a = ap.parse_args(argv)
+    select_provider(a.provider)
     run(a.model, a.mode, a.limit)
     return 0
 

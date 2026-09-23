@@ -26,6 +26,7 @@ import collections
 import glob
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
@@ -147,6 +148,15 @@ def call(task_text: str, retries: int = 5, model: str | None = None,
             if e.code == 429 and ("insufficient_quota" in detail
                                   or "credit_balance_exhausted" in detail):
                 raise SystemExit(f"terminal {last}")
+            # ⚠⚠ A rate-limited provider SAYS how long to wait, and exponential
+            # backoff from 1s ignores it. Groq's free tier is 8,000 TPM and
+            # answers "Please try again in 53.6325s"; 1, 2, 4 burns every retry
+            # inside the window that is still closed. Honour the stated wait.
+            if e.code == 429:
+                m = re.search(r"try again in ([0-9.]+)s", detail)
+                wait = min(float(m.group(1)) + 1, 120) if m else 20.0
+                time.sleep(wait)
+                continue
             if e.code not in (429, 500, 502, 503, 529):
                 raise SystemExit(f"non-retryable {last}")
         except Exception as e:  # noqa: BLE001 - transport errors are retryable
