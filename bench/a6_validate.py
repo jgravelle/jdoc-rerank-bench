@@ -37,13 +37,17 @@ from .a6_draft import PROVIDERS
 
 ROOT = Path(__file__).resolve().parent.parent
 PACK = "audit-a6-2026-09-20"
-# ⚠⚠ 180s, not the drafting default of 900s x 5 retries. A validation call grades
-# ONE passage, or one already-written task; it is never legitimately slow. On
-# 2026-09-22 a run sat 100 MINUTES with no output because another workload held
-# the Ollama host and would not yield an 18 GB resident model, and every blocked
-# call climbed the drafting ladder in silence. **A budget sized for the slowest
-# legitimate request cannot detect a blocked one.**
-CALL_TIMEOUT = 180
+# ⚠⚠ THE BUDGET IS PER MODE, because the two modes send prompts an order of
+# magnitude apart. A single-passage call is ~1,300 tokens in; a batch call is
+# 5,533 median and up to 12,121, and it asks for 15 grades instead of one.
+# Measured: the 8B already timed out at 300s on a batch call.
+# ⚠ One number for both was a real defect, not a tuning miss. 180s came from
+# SINGLE-passage timings and was then applied to 26B BATCH calls, which failed
+# the LARGEST tasks first -- so the run was quietly selecting which passages got
+# graded, and packaging (the corpus that scored worst in the audit) was dropping
+# out. **A timeout that fails the big cases biases the sample rather than just
+# slowing it.**
+CALL_TIMEOUT = {"single": 180, "batch": 1200}
 
 
 def _ckpt_path(model: str, mode: str) -> Path:
@@ -148,7 +152,7 @@ def run(model: str, mode: str, limit: int = 0) -> None:
             if mode == "batch":
                 # Production shape: every sibling visible in one prompt.
                 out, _, _ = draft_call((d / f"{qid}.md").read_text(encoding="utf-8"),
-                                       model=model, retries=2, timeout=CALL_TIMEOUT)
+                                       model=model, retries=2, timeout=CALL_TIMEOUT[mode])
                 got = out.get("grades", out)
                 for k, sec in need.items():
                     cell = got.get(k)
@@ -163,7 +167,7 @@ def run(model: str, mode: str, limit: int = 0) -> None:
                 for k, sec in need.items():
                     prompt = f"{head}\n\n# Passages\n\n## c01\n\n{blocks[k]}\n"
                     out, _, _ = draft_call(prompt, model=model, retries=2,
-                                           timeout=CALL_TIMEOUT)
+                                           timeout=CALL_TIMEOUT[mode])
                     got = out.get("grades", out)
                     cell = got.get("c01", got.get(k))
                     v = cell.get("g") if isinstance(cell, dict) else cell
